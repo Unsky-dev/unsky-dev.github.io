@@ -219,10 +219,26 @@ footer {
   border-radius: 10px 10px 0 0;
 }
 
+.btn {
+  background-color: #353535;
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background-color: #4f4f4f;
+}
+
 footer img {
   height: 50px;
   width: 50px;
   border-radius: 10px;
+}
+
+.footer-bottom {
+  margin-top: 25px;
 }
 
 ::-webkit-scrollbar-track {
