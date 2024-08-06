@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro&display=swap');
+
+body {
+    font-family: 'Anonymous Pro', monospace;
+    color: white;
+    background-color: black;
+}
+
+.title {
+    text-align: center;
+}
+
+.subtitle {
+    text-align: center;
+}
+
+.password {
+    display: block;
+    margin: 0 auto;
+}
+
+.submit {
+    display: block;
+    margin: 20px auto 0 auto;
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1vw;
+    cursor: pointer;
+}
+
+@media (max-width: 767px) {
+    .title {
+        font-size: 5vw;
+    }
+
+    .subtitle {
+        font-size: 3vw;
+    }
+
+    .submit {
+        font-size: 2vw;
+    }
+}
+
+@media (min-width: 768px) {
+    .title {
+        font-size: 50px;
+    }
+
+    .subtitle {
+        font-size: 30px;
+    }
+}
