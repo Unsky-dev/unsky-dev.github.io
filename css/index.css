@@ -26,30 +26,37 @@ body {
     color: black;
     border: none;
     padding: 10px 20px;
-    font-size: 1vw;
     cursor: pointer;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 999px) {
     .title {
-        font-size: 5vw;
+        font-size: 8vw;
     }
 
     .subtitle {
-        font-size: 3vw;
+        font-size: 5vw;
     }
 
     .submit {
-        font-size: 2vw;
+        font-size: 4vw; 
+    }
+
+    input[type="password"] {
+        font-size: 5vw; 
     }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1000px) {
     .title {
         font-size: 50px;
     }
 
     .subtitle {
         font-size: 30px;
+    }
+
+    .submit {
+        font-size: 1vw;
     }
 }
