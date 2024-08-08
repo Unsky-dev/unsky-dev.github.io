@@ -29,8 +29,7 @@ body {
     cursor: pointer;
 }
 
-.error-message {
-    color: red; 
+.message {
     display: none;
     text-align: center;
     margin-top: 20px
