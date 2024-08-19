@@ -9,12 +9,21 @@ document.querySelector('.submit').addEventListener('click', function() {
         document.querySelector('.message').style.display = 'block';
         document.querySelector('.message').style.color = 'blue';
         document.querySelector('.message').textContent = "that's me... How did you know my name?";
-    } else {
+    } else if (inputPassword == 'nicolas') {
+        document.querySelector('.message').style.display = 'block';
+        document.querySelector('.message').style.color = 'blue';
+        document.querySelector('.message').textContent = "his bestfriend... you're a lot for him. try to type music";
+    } else if (inputPassword == 'music') {
+        document.querySelector('.message').style.display = 'block';
+        document.querySelector('.message').style.color = 'blue';
+        document.querySelector('.message').textContent = "it's for you";
+        document.querySelector('.music').style.display = 'block';
+    } else {    
         document.querySelector('.message').style.display = 'none';
         attemptCount++;
         if (attemptCount > maxAttempts) {
             document.querySelector('.message').style.color = 'red';
-            document.querySelector('.message').textContent = 'stop trying';
+            document.querySelector('.message').textContent = 'stop trying \n who are you';
             document.querySelector('.message').style.display = 'block';
         }
     }

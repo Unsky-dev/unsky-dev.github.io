@@ -1,0 +1,9 @@
+album: System Malfunction
+
+Null Pointer
+Kernel Panic
+Connection Refused
+Data Corruption
+Timeout
+Firewall
+Syntax Error
