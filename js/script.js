@@ -3,7 +3,7 @@ const maxAttempts = 3;
 
 document.querySelector('.submit').addEventListener('click', function() {
     const inputPassword = document.querySelector('.password').value.toLowerCase();
-    const correctPassword = 'charly-djudh'.toLowerCase();
+    const correctPassword = 'noname'.toLowerCase();
 
     if (inputPassword === correctPassword) {
         document.querySelector('.message').style.display = 'block';
