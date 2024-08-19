@@ -19,6 +19,11 @@ body {
     margin: 0 auto;
 }
 
+.noname {
+    display: none;
+    margin: 0 auto;
+}
+
 .submit {
     display: block;
     margin: 20px auto 0 auto;
