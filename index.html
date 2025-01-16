@@ -18,7 +18,7 @@
                     <span class="slider"></span>
                 </label>
             </div>
-            <div>
+            <div class="intensity-control">
                 <label for="intensity">Intensité :</label>
                 <input type="range" id="intensity" class="modern-slider" min="0" max="100" value="0" disabled>
                 <p>Intensité actuelle : <span id="intensity-value">0%</span></p>
@@ -58,14 +58,19 @@
         const slider = document.getElementById('intensity');
         const intensityValue = document.getElementById('intensity-value');
         const toggleSwitch = document.getElementById('toggle-switch');
+        const intensityControl = document.querySelector('.intensity-control');
+
+        intensityControl.style.display = 'none';
 
         toggleSwitch.addEventListener('change', () => {
             if (toggleSwitch.checked) {
                 slider.disabled = false;
+                intensityControl.style.display = 'block';
             } else {
                 slider.disabled = true;
                 slider.value = 0;       
                 intensityValue.textContent = '0%';
+                intensityControl.style.display = 'none';
             }
         });
 
