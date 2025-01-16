@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projet Luminaire</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="shortcut icon" href="assets/img/icon.png" type="image/png">
 </head>
 <body>
     <h1>Projet Luminaire</h1>
@@ -55,6 +56,13 @@
     </div>
 
     <script>
+        if (navigator.serviceWorker) {
+        navigator.serviceWorker.register (
+          '/github-page-pwa/sw.js',
+          {scope: '/unsky-dev.github.io/'}
+        )
+      }
+
         const slider = document.getElementById('intensity');
         const intensityValue = document.getElementById('intensity-value');
         const toggleSwitch = document.getElementById('toggle-switch');

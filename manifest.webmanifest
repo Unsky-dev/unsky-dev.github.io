@@ -1,0 +1,22 @@
+{
+    "name": "OpenLuminate",
+    "short_name": "openLum",
+
+    "description": "Application de controle de la lumière",
+   
+    "scope": "/unsky-dev.github.io/",
+    "start_url": "/unsky-dev.github.io/",
+   
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff",
+   
+    "display": "standalone", 
+
+    "icons": [
+        {
+          "src": "/unsky-dev.github.io/asstes/img/icon.png",
+          "type": "image/png",
+          "sizes": "700x700"
+        }
+    ]
+  }
