@@ -14,7 +14,7 @@
 
     "icons": [
         {
-          "src": "/unsky-dev.github.io/asstes/img/icon.png",
+          "src": "/unsky-dev.github.io/assets/img/icon.png",
           "type": "image/png",
           "sizes": "700x700"
         }
