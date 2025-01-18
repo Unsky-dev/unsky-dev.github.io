@@ -10,7 +10,7 @@
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
  
-  "display": "standalone",
+  "display": "fullscreen",
   "orientation": "portrait",
 
   "icons": [
