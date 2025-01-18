@@ -1,4 +1,4 @@
-var GHPATH = '/unsky-dev.github.io';
+var GHPATH = 'unsky-dev.github.io';
 var APP_PREFIX = 'openlum';
 var VERSION = 'version_00';
 
