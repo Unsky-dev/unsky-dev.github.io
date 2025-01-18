@@ -1,6 +1,6 @@
 var GHPATH = '/unsky-dev.github.io';
 var APP_PREFIX = 'openlum';
-var VERSION = 'version_02';
+var VERSION = 'version_03';
 
 var URLS = [
   `${GHPATH}/index.html`,
@@ -40,7 +40,7 @@ self.addEventListener('fetch', function (e) {
     caches.match(e.request).then(function (response) {
       if (response) {
         console.log('[Service Worker] Found in cache:', e.request.url);
-        return response; // Retourne la réponse mise en cache
+        return response;
       }
       console.log('[Service Worker] Network request for:', e.request.url);
       return fetch(e.request)
