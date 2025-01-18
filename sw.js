@@ -27,15 +27,15 @@ self.addEventListener('fetch', function(e) {
         console.log('[Service Worker] Found in cache', e.request.url);
         if (response.redirected) {
           console.log('[Service Worker] Redirected response found in cache', e.request.url);
-          return fetch(e.request);
+          return fetch(e.request, { redirect: 'follow' });
         }
         return response;
       }
       console.log('[Service Worker] Network request for', e.request.url);
-      return fetch(e.request).then(function(networkResponse) {
+      return fetch(e.request, { redirect: 'follow' }).then(function(networkResponse) {
         if (networkResponse.redirected) {
           console.log('[Service Worker] Redirected response from network', e.request.url);
-          return fetch(e.request);
+          return fetch(e.request, { redirect: 'follow' });
         }
         return networkResponse;
       }).catch(() => {
