@@ -25,10 +25,20 @@ self.addEventListener('fetch', function(e) {
     caches.match(e.request).then(function(response) {
       if (response) {
         console.log('[Service Worker] Found in cache', e.request.url);
+        if (response.redirected) {
+          console.log('[Service Worker] Redirected response found in cache', e.request.url);
+          return fetch(e.request);
+        }
         return response;
       }
       console.log('[Service Worker] Network request for', e.request.url);
-      return fetch(e.request).catch(() => {
+      return fetch(e.request).then(function(networkResponse) {
+        if (networkResponse.redirected) {
+          console.log('[Service Worker] Redirected response from network', e.request.url);
+          return fetch(e.request);
+        }
+        return networkResponse;
+      }).catch(() => {
         console.log('[Service Worker] Fetch failed; returning offline page');
         if (e.request.mode === 'navigate') {
           return caches.match(`${GHPATH}/offline.html`);
