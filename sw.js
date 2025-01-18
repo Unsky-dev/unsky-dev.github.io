@@ -25,17 +25,15 @@ self.addEventListener('fetch', function(e) {
     caches.match(e.request).then(function(response) {
       if (response) {
         console.log('[Service Worker] Found in cache', e.request.url);
-        if (response.redirected) {
-          console.log('[Service Worker] Redirected response found in cache', e.request.url);
-          return fetch(e.request, { redirect: 'follow' });
-        }
-        return response;
+        return response; // Utilisez la réponse en cache directement.
       }
       console.log('[Service Worker] Network request for', e.request.url);
-      return fetch(e.request, { redirect: 'follow' }).then(function(networkResponse) {
+      return fetch(e.request).then(function(networkResponse) {
         if (networkResponse.redirected) {
+          // Cloner et nettoyer les réponses redirigées.
           console.log('[Service Worker] Redirected response from network', e.request.url);
-          return fetch(e.request, { redirect: 'follow' });
+          const cleanResponse = networkResponse.clone();
+          return cleanResponse;
         }
         return networkResponse;
       }).catch(() => {
