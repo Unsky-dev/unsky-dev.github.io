@@ -1,23 +1,23 @@
 {
-    "name": "OpenLuminate",
-    "short_name": "openLum",
+  "name": "OpenLuminate",
+  "short_name": "openLum",
 
-    "description": "Application de controle de la lumière",
-   
-    "scope": "/unsky-dev.github.io/",
-    "start_url": "/unsky-dev.github.io/",
-   
-    "background_color": "#ffffff",
-    "theme_color": "#ffffff",
-   
-    "display": "standalone",
-    "orientation": "portrait",
+  "description": "Application de controle de la lumière",
+ 
+  "scope": "/",
+  "start_url": "/",
+ 
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+ 
+  "display": "standalone",
+  "orientation": "portrait",
 
-    "icons": [
-        {
-          "src": "/unsky-dev.github.io/assets/img/icon.png",
-          "type": "image/png",
-          "sizes": "700x700"
-        }
-    ]
-  }
+  "icons": [
+      {
+        "src": "assets/img/icon.png",
+        "type": "image/png",
+        "sizes": "700x700"
+      }
+  ]
+}
