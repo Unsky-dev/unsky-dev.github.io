@@ -1,6 +1,6 @@
 var GHPATH = '/unsky-dev.github.io';
 var APP_PREFIX = 'openlum';
-var VERSION = 'version_03';
+var VERSION = 'version_04';
 
 var URLS = [
   `${GHPATH}/index.html`,
@@ -36,18 +36,21 @@ self.addEventListener('activate', function (e) {
 
 self.addEventListener('fetch', function (e) {
   console.log('[Service Worker] Fetch', e.request.url);
+
   e.respondWith(
     caches.match(e.request).then(function (response) {
       if (response) {
         console.log('[Service Worker] Found in cache:', e.request.url);
         return response;
       }
+
       console.log('[Service Worker] Network request for:', e.request.url);
-      return fetch(e.request)
+      return fetch(e.request, { redirect: 'follow' })
         .then(function (networkResponse) {
           if (networkResponse.redirected) {
             console.log('[Service Worker] Handling redirected response');
-            return networkResponse.clone(); 
+            const clonedResponse = networkResponse.clone();
+            return clonedResponse;
           }
           return networkResponse;
         })
