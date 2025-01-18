@@ -8,7 +8,7 @@ var URLS = [
   `${GHPATH}/`,
   `${GHPATH}/index.html`,
   `${GHPATH}/assets/css/styles.css`,
-  `${GHPATH}/offline.html` // Ajoutez cette ligne
+  `${GHPATH}/offline.html`
 ];
 
 self.addEventListener('install', function(e) {

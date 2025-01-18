@@ -52,16 +52,16 @@
 
     </div>
     <div class="footer">
-        <p>© 2024-2025 Projet Luminaire V0.1 - Tous droits réservés.</p>
+        <p>© 2024-2025 Projet Luminaire V0.2 - Tous droits réservés.</p>
     </div>
 
     <script>
         if (navigator.serviceWorker) {
-        navigator.serviceWorker.register (
-          '/github-page-pwa/sw.js',
-          {scope: '/unsky-dev.github.io/'}
-        )
-      }
+            navigator.serviceWorker.register(
+                '/unsky-dev.github.io/sw.js',
+                { scope: '/unsky-dev.github.io/' }
+            );
+        }
 
         const slider = document.getElementById('intensity');
         const intensityValue = document.getElementById('intensity-value');
@@ -76,7 +76,7 @@
                 intensityControl.style.display = 'block';
             } else {
                 slider.disabled = true;
-                slider.value = 0;       
+                slider.value = 0;
                 intensityValue.textContent = '0%';
                 intensityControl.style.display = 'none';
             }
