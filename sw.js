@@ -30,7 +30,9 @@ self.addEventListener('fetch', function(e) {
       console.log('[Service Worker] Network request for', e.request.url);
       return fetch(e.request).catch(() => {
         console.log('[Service Worker] Fetch failed; returning offline page');
-        return caches.match(`${GHPATH}/offline.html`);
+        if (e.request.mode === 'navigate') {
+          return caches.match(`${GHPATH}/offline.html`);
+        }
       });
     })
   );
