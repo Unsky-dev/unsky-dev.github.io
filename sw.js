@@ -15,6 +15,7 @@ self.addEventListener('install', (event) => {
             return cache.addAll(ASSETS_TO_CACHE);
         })
     );
+    self.skipWaiting();
 });
 
 // Activation et nettoyage des anciens caches
@@ -31,6 +32,7 @@ self.addEventListener('activate', (event) => {
             );
         })
     );
+    self.clients.claim();
 });
 
 // Interception des requêtes réseau
