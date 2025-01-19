@@ -57,12 +57,47 @@
     </div>
 
     <script>
-        if (navigator.serviceWorker) {
-            navigator.serviceWorker.register(
-                'sw.js',
-                { scope: '/' }
-            );
-        }
+        // Enregistrement du Service Worker
+        if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').then(() => {
+            console.log('Service Worker enregistré avec succès.');
+        }).catch((error) => {
+            console.error('Erreur lors de l\'enregistrement du Service Worker :', error);
+        });
+    }
+
+    // Mise à jour du Service Worker
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').then((registration) => {
+            registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing;
+                newWorker.addEventListener('statechange', () => {
+                    if (newWorker.state === 'installed') {
+                        if (navigator.serviceWorker.controller) {
+                            // Nouveau contenu disponible
+                            const updateNotification = document.createElement('div');
+                            updateNotification.textContent = "Nouvelle version disponible ! Cliquez pour mettre à jour.";
+                            updateNotification.style.position = 'fixed';
+                            updateNotification.style.bottom = '0';
+                            updateNotification.style.width = '100%';
+                            updateNotification.style.background = 'black';
+                            updateNotification.style.color = 'white';
+                            updateNotification.style.textAlign = 'center';
+                            updateNotification.style.cursor = 'pointer';
+                            document.body.appendChild(updateNotification);
+
+                            updateNotification.addEventListener('click', () => {
+                                newWorker.postMessage({ action: 'skipWaiting' });
+                                window.location.reload();
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    }
+
+
 
         const slider = document.getElementById('intensity');
         const intensityValue = document.getElementById('intensity-value');

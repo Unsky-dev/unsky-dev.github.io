@@ -1,69 +1,56 @@
-var GHPATH = '/unsky-dev.github.io';
-var APP_PREFIX = 'openlum';
-var VERSION = 'version_05';
-
-var URLS = [
-  `${GHPATH}/index.html`,
-  `${GHPATH}/assets/css/styles.css`,
-  `${GHPATH}/offline.html`,
+const CACHE_NAME = 'openluminate-cache-v1';
+const OFFLINE_URL = '/offline.html';
+const ASSETS_TO_CACHE = [
+    '/',
+    '/index.html',
+    '/offline.html',
+    '/assets/css/styles.css',
+    '/assets/img/icon.png'
 ];
 
-self.addEventListener('install', function (e) {
-  console.log('[Service Worker] Install event triggered');
-  e.waitUntil(
-    caches.open(APP_PREFIX + VERSION).then(function (cache) {
-      console.log('[Service Worker] Opened cache:', APP_PREFIX + VERSION);
-      return cache.addAll(URLS).then(() => {
-        console.log('[Service Worker] All files cached:', URLS);
-      }).catch((err) => {
-        console.error('[Service Worker] Caching failed:', err);
-      });
-    })
-  );
+// Installation du Service Worker
+self.addEventListener('install', (event) => {
+    event.waitUntil(
+        caches.open(CACHE_NAME).then((cache) => {
+            return cache.addAll(ASSETS_TO_CACHE);
+        })
+    );
 });
 
-self.addEventListener('activate', function (e) {
-  console.log('[Service Worker] Activate event triggered');
-  e.waitUntil(
-    caches.keys().then(function (keyList) {
-      return Promise.all(
-        keyList.map(function (key) {
-          if (key !== APP_PREFIX + VERSION) {
-            console.log('[Service Worker] Removing old cache:', key);
-            return caches.delete(key);
-          }
+// Activation et nettoyage des anciens caches
+self.addEventListener('activate', (event) => {
+    const cacheWhitelist = [CACHE_NAME];
+    event.waitUntil(
+        caches.keys().then((cacheNames) => {
+            return Promise.all(
+                cacheNames.map((cacheName) => {
+                    if (!cacheWhitelist.includes(cacheName)) {
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
         })
-      );
-    })
-  );
+    );
 });
 
-self.addEventListener('fetch', function (e) {
-  console.log('[Service Worker] Fetch', e.request.url);
+// Interception des requêtes réseau
+self.addEventListener('fetch', (event) => {
+    if (event.request.mode === 'navigate') {
+        event.respondWith(
+            fetch(event.request).catch(() => caches.match(OFFLINE_URL))
+        );
+    } else {
+        event.respondWith(
+            caches.match(event.request).then((response) => {
+                return response || fetch(event.request);
+            })
+        );
+    }
+});
 
-  e.respondWith(
-    caches.match(e.request).then(function (response) {
-      if (response) {
-        console.log('[Service Worker] Found in cache:', e.request.url);
-        return response; // Utilise la réponse mise en cache
-      }
-
-      console.log('[Service Worker] Network request for:', e.request.url);
-      return fetch(e.request, { redirect: 'follow' }) // Suivre les redirections
-        .then(function (networkResponse) {
-          if (networkResponse.redirected) {
-            console.log('[Service Worker] Handling redirected response');
-            const clonedResponse = networkResponse.clone(); // Cloner la réponse pour éviter des effets secondaires
-            return clonedResponse;
-          }
-          return networkResponse;
-        })
-        .catch(() => {
-          console.log('[Service Worker] Fetch failed; returning offline page');
-          if (e.request.mode === 'navigate') {
-            return caches.match(`${GHPATH}/offline.html`); // Page hors ligne
-          }
-        });
-    })
-  );
+// Gérer les messages du client
+self.addEventListener('message', (event) => {
+    if (event.data === 'skipWaiting') {
+        self.skipWaiting();
+    }
 });
