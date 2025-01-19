@@ -1,125 +1,20 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenLuminate</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>Loading</title>
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="shortcut icon" href="assets/img/icon.png" type="image/png">
     <link rel="manifest" href="manifest.webmanifest">
 </head>
 <body>
-    <h1>Projet Luminaire</h1>
-    <div class="container">
-        <div class="control-panel">
-            <h3>Contrôle de Luminaire</h3>
-            <div class="switch">
-                <label class="toggle">
-                    <input type="checkbox" id="toggle-switch">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            <div class="intensity-control">
-                <label for="intensity">Intensité :</label>
-                <input type="range" id="intensity" class="modern-slider" min="0" max="100" value="0" disabled>
-                <p>Intensité actuelle : <span id="intensity-value">0%</span></p>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <h2>Présentation du Projet</h2>
-        <p>Ce projet vise à créer un système de contrôle de luminaire interactif, permettant aux utilisateurs de gérer l’intensité de l’éclairage.</p>
-        
-        <h2>Auteurs</h2>
-        <ul>
-            <li>Charly Meriano</li>
-            <li>Fabien Perronet</li>
-            <li>Nathan Pruvost</li>
-            <li>Louai Ouerghi</li>
-        </ul>
-        
-        <h2>Objectifs</h2>
-        <ul>
-            <li>Permettre le contrôle à distance de l’éclairage.</li>
-            <li>Offrir une interface utilisateur intuitive.</li>
-        </ul>
-        
-        <h2>Fonctionnalités</h2>
-        <ul>
-            <li>Contrôle de l’intensité lumineuse.</li>
-            <li>Statut d'allumage/extinction.</li>
-        </ul>
-
-    </div>
-    <div class="footer">
-        <p>© 2024-2025 Projet Luminaire V0.5 - Tous droits réservés.</p>
-    </div>
-
     <script>
-        // Enregistrement du Service Worker
-        if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js').then(() => {
-            console.log('Service Worker enregistré avec succès.');
-        }).catch((error) => {
-            console.error('Erreur lors de l\'enregistrement du Service Worker :', error);
-        });
-    }
-    // Mise à jour du Service Worker
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js').then((registration) => {
-            registration.addEventListener('updatefound', () => {
-                const newWorker = registration.installing;
-                newWorker.addEventListener('statechange', () => {
-                    if (newWorker.state === 'installed') {
-                        if (navigator.serviceWorker.controller) {
-                            // Nouveau contenu disponible
-                            const updateNotification = document.createElement('div');
-                            updateNotification.textContent = "Nouvelle version disponible ! Cliquez pour mettre à jour.";
-                            updateNotification.style.position = 'fixed';
-                            updateNotification.style.bottom = '0';
-                            updateNotification.style.width = '100%';
-                            updateNotification.style.background = 'black';
-                            updateNotification.style.color = 'white';
-                            updateNotification.style.textAlign = 'center';
-                            updateNotification.style.cursor = 'pointer';
-                            document.body.appendChild(updateNotification);
-
-                            updateNotification.addEventListener('click', () => {
-                                newWorker.postMessage({ action: 'skipWaiting' });
-                                window.location.reload();
-                            });
-                        }
-                    }
-                });
-            });
-        });
-    }
-
-
-
-        const slider = document.getElementById('intensity');
-        const intensityValue = document.getElementById('intensity-value');
-        const toggleSwitch = document.getElementById('toggle-switch');
-        const intensityControl = document.querySelector('.intensity-control');
-
-        intensityControl.style.display = 'none';
-
-        toggleSwitch.addEventListener('change', () => {
-            if (toggleSwitch.checked) {
-                slider.disabled = false;
-                intensityControl.style.display = 'block';
-            } else {
-                slider.disabled = true;
-                slider.value = 0;
-                intensityValue.textContent = '0%';
-                intensityControl.style.display = 'none';
-            }
-        });
-
-        slider.addEventListener('input', () => {
-            intensityValue.textContent = `${slider.value}%`;
-        });
+        if (navigator.onLine) {
+            window.location.href = "main.html";
+        } else {
+            window.location.href = "offline.html";
+        }
     </script>
 </body>
 </html>
