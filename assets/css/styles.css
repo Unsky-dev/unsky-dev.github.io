@@ -151,6 +151,34 @@ li {
     text-align: center;
 }
 
+.install-button {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #4a00e0, #8e2de2);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    transition: transform 0.2s, box-shadow 0.2s;
+    z-index: 1000;
+}
+
+.install-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.install-button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
 @media (max-width: 768px) {
     h1 {
         font-size: 2rem;
@@ -160,4 +188,15 @@ li {
         width: 95%;
         padding: 15px;
     }
+
+    .install-button {
+        bottom: 15px;
+        right: 15px;
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
 }
+
+
+
+

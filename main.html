@@ -11,6 +11,7 @@
 </head>
 <body>
     <h1>Projet Luminaire</h1>
+    <button id="installButton" class="install-button">Installer l'application</button>
     <div class="container">
         <div class="control-panel">
             <h3>Contrôle de Luminaire</h3>
@@ -96,6 +97,33 @@
         });
     }
 
+    let deferredPrompt;
+    const installButton = document.getElementById('installButton');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        installButton.style.display = 'block';
+    });
+
+    installButton.addEventListener('click', async () => {
+        if (!deferredPrompt) {
+            return;
+        }
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        installButton.style.display = 'none';
+    });
+
+    window.addEventListener('appinstalled', () => {
+        installButton.style.display = 'none';
+        console.log('Application installée avec succès!');
+    });
+
+    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+        installButton.style.display = 'none';
+    }
 
 
         const slider = document.getElementById('intensity');
