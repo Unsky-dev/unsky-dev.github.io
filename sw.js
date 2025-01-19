@@ -1,4 +1,4 @@
-const CACHE_NAME = 'openluminate-cache-v1';
+const CACHE_NAME = 'openluminate-cache-v1BETA';
 const OFFLINE_URL = '/offline.html';
 const ASSETS_TO_CACHE = [
     '/',
