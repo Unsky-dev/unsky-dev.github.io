@@ -66,6 +66,18 @@
         });
     }
 
+    document.addEventListener('DOMContentLoaded', () => {
+        fetch('/')
+            .then(response => {
+                if (!response.ok) {
+                    window.location.href = '/offline.html';
+                }
+            })
+            .catch(() => {
+                window.location.href = '/offline.html';
+            });
+    });
+
     // Mise à jour du Service Worker
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/sw.js').then((registration) => {
