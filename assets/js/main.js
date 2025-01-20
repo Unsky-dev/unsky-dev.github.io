@@ -85,10 +85,18 @@ if (!('NDEFReader' in window)) {
         const slider = document.getElementById('intensity');
 
         if (!isWriting) {
-            info.style.display = 'block';
-            info.textContent = `Cela va écrire avec l'intensité définie: ${slider.value}`;
-            nfc.querySelector('.writeButton').textContent = 'Confirmer l\'écriture';
-            isWriting = true;
+            if (slider.value == 0) {
+                info.style.display = 'block';
+                info.style.color = 'tomato';
+                info.textContent = 'Veuillez choisir une intensité supérieure à 0%.';
+            } else {
+                nfc.querySelector('.scanButton').style.display = 'none';
+                info.style.display = 'block';
+                info.style.color = 'tomato';
+                info.textContent = `Cela va écrire avec l'intensité définie: ${slider.value}`;
+                nfc.querySelector('.writeButton').textContent = 'Confirmer l\'écriture';
+                isWriting = true;
+            }
         } else {
             const message = `Message avec intensité: ${slider.value}`;
             console.log('Écriture du message:', message);
@@ -127,6 +135,7 @@ slider.addEventListener('input', () => {
     intensityValue.textContent = `${slider.value}%`;
     if (slider.value == 0) {
         toggleSwitch.checked = false;
+        slider.disabled = true;
     }
 });
 
