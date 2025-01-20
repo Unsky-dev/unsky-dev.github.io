@@ -124,6 +124,9 @@ toggleSwitch.addEventListener('change', () => {
 
 slider.addEventListener('input', () => {
     intensityValue.textContent = `${slider.value}%`;
+    if (slider.value == 0) {
+        toggleSwitch.checked = false;
+    }
 });
 
 // Gestion du bouton de réinitialisation
