@@ -98,12 +98,12 @@ if (!('NDEFReader' in window)) {
                 isWriting = true;
             }
         } else {
-            const message = `Message avec intensité: ${slider.value}`;
-            console.log('Écriture du message:', message);
+            const message = `Tag avec intensité: ${slider.value}`;
+            console.log('Écriture du tag:', message);
             // implémenter l'écriture du message mdrrrr
             info.style.display = 'block';
             info.style.color = 'green';
-            info.textContent = 'Message écrit avec succès!';
+            info.textContent = 'Tag écrit avec succès!';
             nfc.querySelector('.writeButton').textContent = 'Écrire un tag';
             nfc.querySelector('.scanButton').style.display = 'inline';
             isWriting = false;
