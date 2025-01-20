@@ -28,6 +28,12 @@
             </div>
         </div>
     </div>
+    <div class="container" id="nfc">
+        <h3>Interrupteur NFC</h3>
+        <p>Écriver un tag NFC pour allumer ou éteindre la lampe.</p>
+        <a class="writeButton" href="">Écrire un tag</a>
+        <a class="ScanButton" href=""> Tester votre tag</a>
+    </div>
     <div class="container">
         <h2>Présentation du Projet</h2>
         <p>Ce projet vise à créer un système de contrôle de luminaire interactif, permettant aux utilisateurs de gérer l’intensité de l’éclairage.</p>
@@ -125,6 +131,14 @@
         installButton.style.display = 'none';
     }
 
+    if (!("NDEFReader" in window)) {
+        const nfc = document.getElementById('nfc');
+        nfc.style.display = 'none';
+        log('NFC non supporté.');
+    } else {
+        const nfc = document.getElementById('nfc');
+        nfc.style.display = 'block';
+    }
 
         const slider = document.getElementById('intensity');
         const intensityValue = document.getElementById('intensity-value');

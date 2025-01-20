@@ -179,6 +179,11 @@ li {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
+#nfc {
+    display: none;
+    color: white;
+}
+
 @media (max-width: 768px) {
     h1 {
         font-size: 2rem;
