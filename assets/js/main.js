@@ -85,7 +85,7 @@ if (!('NDEFReader' in window)) {
         const slider = document.getElementById('intensity');
 
         if (!isWriting) {
-            if (slider.value == 0) {
+            if (slider.value == 0 || slider.disabled) {
                 info.style.display = 'block';
                 info.style.color = 'tomato';
                 info.textContent = 'Veuillez choisir une intensité supérieure à 0%.';
