@@ -114,6 +114,7 @@ toggleSwitch.addEventListener('change', () => {
     if (toggleSwitch.checked) {
         slider.disabled = false;
         intensityControl.style.display = 'block';
+        slider.value = 50;
     } else {
         slider.disabled = true;
         slider.value = 0;
