@@ -2,6 +2,10 @@
 
 OpenLuminate est une application web progressive (PWA) de contrôle de luminaire intelligent, offrant une interface intuitive pour gérer l'éclairage à distance.
 
+## 🧠 Carte mentale
+
+![Carte mentale](./assets/project/carte%20mentale.png)
+
 ## 🌟 Fonctionnalités
 
 - Interface utilisateur intuitive et responsive
@@ -45,10 +49,14 @@ L'application peut être installée sur les appareils mobiles et de bureau grâc
 
 ## 👥 Auteurs
 
-- Charly Meriano
-- Fabien Perronet
-- Nathan Pruvost
-- Louai Ouerghi
+- Charly Meriano : Développeur Back-End
+- Fabien Perronet : Développeur Front-End
+- Nathan Pruvost : Alimentation
+- Louai Ouerghi : Alimentation
+
+### 🤝 Co-Auteurs
+
+ - Secret mdrrr : Design UI/UX
 
 ## 💡 Support NFC
 
@@ -76,4 +84,4 @@ Version actuelle : V1 BETA (2024-2025)
 
 - Navigateurs modernes avec support des Service Workers
 - Support PWA requis pour l'installation
-- Support NFC optionnel (tkt t'as le temps, ça marche pas encore)
+- Support NFC optionnel (tkt, ça marche pas encore)
