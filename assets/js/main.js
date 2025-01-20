@@ -120,15 +120,14 @@ const intensityControl = document.querySelector('.intensity-control');
 intensityControl.style.display = 'none';
 
 toggleSwitch.addEventListener('change', () => {
+    intensityValue.textContent = '50%';
     if (toggleSwitch.checked) {
         slider.disabled = false;
         intensityControl.style.display = 'block';
         slider.value = 50;
-        intensityValue.textContent = '50%';
     } else {
         slider.disabled = true;
         slider.value = 0;
-        intensityValue.textContent = '50%';
         intensityControl.style.display = 'none';
     }
 });
