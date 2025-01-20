@@ -105,6 +105,7 @@ if (!('NDEFReader' in window)) {
             info.style.color = 'green';
             info.textContent = 'Message écrit avec succès!';
             nfc.querySelector('.writeButton').textContent = 'Écrire un tag';
+            nfc.querySelector('.scanButton').style.display = 'block';
             isWriting = false;
         }
     });
@@ -123,6 +124,7 @@ toggleSwitch.addEventListener('change', () => {
         slider.disabled = false;
         intensityControl.style.display = 'block';
         slider.value = 50;
+        intensityValue.textContent = '50%';
     } else {
         slider.disabled = true;
         slider.value = 0;
