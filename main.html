@@ -31,6 +31,7 @@
     <div class="container" id="nfc">
         <h3>Interrupteur NFC</h3>
         <p>Écriver un tag NFC pour allumer ou éteindre la lampe.</p>
+        <p id="non-supported">La gestion NFC n'est pas supportée par votre navigateur.</p>
         <a class="writeButton" href="">Écrire un tag</a>
         <a class="ScanButton" href=""> Tester votre tag</a>
     </div>
@@ -133,8 +134,12 @@
 
     if (!("NDEFReader" in window)) {
         const nfc = document.getElementById('nfc');
-        nfc.style.display = 'none';
-        log('NFC non supporté.');
+        // Affichage du message d'erreur et masquage des boutons
+        nfc.querySelector('.writeButton').style.display = 'none';
+        nfc.querySelector('.ScanButton').style.display = 'none';
+        nfc.querySelector('#non-supported').style.display = 'block';
+        nfc.querySelector('#non-supported').style.color = 'tomato';
+        console.log('NFC non supporté.');
     } else {
         const nfc = document.getElementById('nfc');
         nfc.style.display = 'block';
