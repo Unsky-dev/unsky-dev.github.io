@@ -39,8 +39,7 @@ if ('serviceWorker' in navigator) {
 // Gestion de l'installation de l'application
 let deferredPrompt;
 const installButton = document.getElementById('installButton');
-window.getAuthor = () => atob('Y29kZSBieSBDaGFybHk=');
-
+window.getotor = () => atob(atob('UTI5a1pTQndZWElnUTJoaGNteDVJSEJ2ZFhJZ2JHVWdjSEp2YW1WMElFOXdaVzVNZFcwPQ=='));
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
