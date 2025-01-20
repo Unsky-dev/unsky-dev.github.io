@@ -17,7 +17,8 @@ h1 {
     font-size: 2.5rem;
 }
 
-h2, h3 {
+h2,
+h3 {
     margin: 10px 0;
     text-align: center;
 }
@@ -92,22 +93,23 @@ li {
     transition: 0.4s;
 }
 
-.toggle input:checked + .slider {
+.toggle input:checked+.slider {
     background-color: #4caf50;
 }
 
-.toggle input:checked + .slider:before {
+.toggle input:checked+.slider:before {
     transform: translateX(22px);
 }
 
 /* Barre de changement d'intensité moderne */
 .modern-slider {
-    -webkit-appearance: none; /* Supprime les styles par défaut */
+    -webkit-appearance: none;
+    /* Supprime les styles par défaut */
     appearance: none;
     width: 100%;
     max-width: 300px;
     height: 10px;
-    background: linear-gradient(to bottom, #8e2de2, #4a00e0); 
+    background: linear-gradient(to bottom, #8e2de2, #4a00e0);
     border-radius: 5px;
     outline: none;
     opacity: 0.8;
@@ -127,14 +129,16 @@ li {
     width: 20px;
     height: 20px;
     background: #fff;
-    border: 2px solid #8e2de2; /* Bordure violette */
+    border: 2px solid #8e2de2;
+    /* Bordure violette */
     border-radius: 50%;
     cursor: pointer;
     transition: background-color 0.2s, transform 0.2s;
 }
 
 .modern-slider::-webkit-slider-thumb:hover {
-    background: #8e2de2; /* Violet sur hover */
+    background: #8e2de2;
+    /* Violet sur hover */
     transform: scale(1.2);
 }
 
@@ -199,6 +203,31 @@ li {
     display: none;
 }
 
+.reset-button {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #e00, #d22);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.reset-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.reset-button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
 @media (max-width: 768px) {
     h1 {
         font-size: 2rem;
@@ -216,7 +245,3 @@ li {
         font-size: 0.9rem;
     }
 }
-
-
-
-

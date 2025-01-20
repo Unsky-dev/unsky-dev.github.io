@@ -123,3 +123,26 @@ toggleSwitch.addEventListener('change', () => {
 slider.addEventListener('input', () => {
     intensityValue.textContent = `${slider.value}%`;
 });
+
+// Gestion du bouton de réinitialisation
+const resetButton = document.getElementById('resetButton');
+resetButton.addEventListener('click', async () => {
+    // Effacer le cache du Service Worker
+    const cacheNames = await caches.keys();
+    await Promise.all(cacheNames.map(cacheName => caches.delete(cacheName)));
+
+    // Effacer le localStorage et le sessionStorage
+    localStorage.clear();
+    sessionStorage.clear();
+
+    // Désenregistrer le Service Worker
+    if (navigator.serviceWorker) {
+        const registrations = await navigator.serviceWorker.getRegistrations();
+        for (let registration of registrations) {
+            await registration.unregister();
+        }
+    }
+
+    // Recharger la page
+    window.location.reload();
+});
