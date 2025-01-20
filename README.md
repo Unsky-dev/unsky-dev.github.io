@@ -50,7 +50,7 @@ L'application peut être installée sur les appareils mobiles et de bureau grâc
 ## 👥 Auteurs
 
 - Charly Meriano : Développeur Back-End
-- Fabien Perronet : Développeur Front-End
+- Fabien Peronnet : Développeur Front-End
 - Nathan Pruvost : Alimentation
 - Louai Ouerghi : Alimentation
 
