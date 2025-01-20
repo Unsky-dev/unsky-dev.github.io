@@ -1,29 +1,26 @@
-// Enregistrement du Service Worker
+// Vérification et enregistrement du Service Worker
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js').then(() => {
-        console.log('Service Worker enregistré avec succès.');
-    }).catch((error) => {
-        console.error('Erreur lors de l\'enregistrement du Service Worker :', error);
-    });
-}
-// Mise à jour du Service Worker
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js').then((registration) => {
-        registration.addEventListener('updatefound', () => {
-            const newWorker = registration.installing;
-            newWorker.addEventListener('statechange', () => {
-                if (newWorker.state === 'installed') {
-                    if (navigator.serviceWorker.controller) {
-                        // Nouveau contenu disponible
+    navigator.serviceWorker.register('/sw.js')
+        .then((registration) => {
+            console.log('Service Worker enregistré avec succès.');
+
+            // Gestion de la mise à jour du Service Worker
+            registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing;
+                newWorker.addEventListener('statechange', () => {
+                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                        // Affichage de la notification de mise à jour
                         const updateNotification = document.createElement('div');
                         updateNotification.textContent = "Nouvelle version disponible ! Cliquez pour mettre à jour.";
-                        updateNotification.style.position = 'fixed';
-                        updateNotification.style.bottom = '0';
-                        updateNotification.style.width = '100%';
-                        updateNotification.style.background = 'black';
-                        updateNotification.style.color = 'white';
-                        updateNotification.style.textAlign = 'center';
-                        updateNotification.style.cursor = 'pointer';
+                        Object.assign(updateNotification.style, {
+                            position: 'fixed',
+                            bottom: '0',
+                            width: '100%',
+                            background: 'black',
+                            color: 'white',
+                            textAlign: 'center',
+                            cursor: 'pointer'
+                        });
                         document.body.appendChild(updateNotification);
 
                         updateNotification.addEventListener('click', () => {
@@ -31,12 +28,15 @@ if ('serviceWorker' in navigator) {
                             window.location.reload();
                         });
                     }
-                }
+                });
             });
+        })
+        .catch((error) => {
+            console.error('Erreur lors de l\'enregistrement du Service Worker :', error);
         });
-    });
 }
 
+// Gestion de l'installation de l'application
 let deferredPrompt;
 const installButton = document.getElementById('installButton');
 
@@ -47,9 +47,8 @@ window.addEventListener('beforeinstallprompt', (e) => {
 });
 
 installButton.addEventListener('click', async () => {
-    if (!deferredPrompt) {
-        return;
-    }
+    if (!deferredPrompt) return;
+
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
     deferredPrompt = null;
@@ -65,63 +64,64 @@ if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.
     installButton.style.display = 'none';
 }
 
-if (!("NDEFReader" in window)) {
+// Gestion NFC
+if (!('NDEFReader' in window)) {
     const nfc = document.getElementById('nfc');
+    Object.assign(nfc.querySelector('#info').style, {
+        display: 'block',
+        color: 'tomato'
+    });
+    nfc.querySelector('#info').textContent = "La gestion NFC n'est pas supportée par votre navigateur.";
     nfc.querySelector('.writeButton').style.display = 'none';
     nfc.querySelector('.scanButton').style.display = 'none';
-    nfc.querySelector('#info').style.display = 'block';
-    nfc.querySelector('#info').textContent = "La gestion NFC n'est pas supportée par votre navigateur.";
-    nfc.querySelector('#info').style.color = 'tomato';
     console.log('NFC non supporté.');
 } else {
     const nfc = document.getElementById('nfc');
     nfc.style.display = 'block';
+
+    let isWriting = false;
+
+    nfc.querySelector('.writeButton').addEventListener('click', async () => {
+        const info = document.getElementById('info');
+        const slider = document.getElementById('intensity');
+
+        if (!isWriting) {
+            info.style.display = 'block';
+            info.textContent = `Cela va écrire avec l'intensité définie: ${slider.value}`;
+            nfc.querySelector('.writeButton').textContent = 'Confirmer l\'écriture';
+            isWriting = true;
+        } else {
+            const message = `Message avec intensité: ${slider.value}`;
+            console.log('Écriture du message:', message);
+            info.style.display = 'block';
+            info.style.color = 'green';
+            info.textContent = 'Message écrit avec succès!';
+            nfc.querySelector('.writeButton').textContent = 'Écrire un tag';
+            isWriting = false;
+        }
+    });
 }
 
-let isWriting = false;
+// Contrôle de l'intensité
+const slider = document.getElementById('intensity');
+const intensityValue = document.getElementById('intensity-value');
+const toggleSwitch = document.getElementById('toggle-switch');
+const intensityControl = document.querySelector('.intensity-control');
 
-nfc.querySelector('.writeButton').addEventListener('click', async () => {
-    const info = document.getElementById('info');
-    const slider = document.getElementById('intensity');
+intensityControl.style.display = 'none';
 
-    if (!isWriting) {
-        // Premier clic
-        info.style.display = 'block';
-        info.textContent = `Cela va écrire avec l'intensité définie: ${slider.value}`;
-        nfc.querySelector('.writeButton').textContent = 'Confirmer l\'écriture';
-        isWriting = true;
+toggleSwitch.addEventListener('change', () => {
+    if (toggleSwitch.checked) {
+        slider.disabled = false;
+        intensityControl.style.display = 'block';
     } else {
-        // Deuxième clic
-        const message = `Message avec intensité: ${slider.value}`;
-        // Code pour écrire le message NFC ici
-        console.log('Écriture du message:', message);
-        info.style.display = 'block';
-        info.style.color = 'green';
-        info.textContent = 'Message écrit avec succès!';
-        nfc.querySelector('.writeButton').textContent = 'Écrire un tag';
-        isWriting = false;
+        slider.disabled = true;
+        slider.value = 0;
+        intensityValue.textContent = '0%';
+        intensityControl.style.display = 'none';
     }
 });
 
-    const slider = document.getElementById('intensity');
-    const intensityValue = document.getElementById('intensity-value');
-    const toggleSwitch = document.getElementById('toggle-switch');
-    const intensityControl = document.querySelector('.intensity-control');
-
-    intensityControl.style.display = 'none';
-
-    toggleSwitch.addEventListener('change', () => {
-        if (toggleSwitch.checked) {
-            slider.disabled = false;
-            intensityControl.style.display = 'block';
-        } else {
-            slider.disabled = true;
-            slider.value = 0;
-            intensityValue.textContent = '0%';
-            intensityControl.style.display = 'none';
-        }
-    });
-
-    slider.addEventListener('input', () => {
-        intensityValue.textContent = `${slider.value}%`;
-    });
+slider.addEventListener('input', () => {
+    intensityValue.textContent = `${slider.value}%`;
+});
