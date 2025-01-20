@@ -86,16 +86,19 @@ nfc.querySelector('.writeButton').addEventListener('click', async () => {
 
     if (!isWriting) {
         // Premier clic
+        info.style.display = 'block';
         info.textContent = `Cela va écrire avec l'intensité définie: ${slider.value}`;
-        writeButton.textContent = 'Confirmer l\'écriture';
+        nfc.querySelector('.writeButton').textContent = 'Confirmer l\'écriture';
         isWriting = true;
     } else {
         // Deuxième clic
         const message = `Message avec intensité: ${slider.value}`;
         // Code pour écrire le message NFC ici
         console.log('Écriture du message:', message);
+        info.style.display = 'block';
+        info.style.color = 'green';
         info.textContent = 'Message écrit avec succès!';
-        writeButton.textContent = 'Écrire un tag';
+        nfc.querySelector('.writeButton').textContent = 'Écrire un tag';
         isWriting = false;
     }
 });
