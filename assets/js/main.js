@@ -126,7 +126,7 @@ toggleSwitch.addEventListener('change', () => {
     } else {
         slider.disabled = true;
         slider.value = 0;
-        intensityValue.textContent = '0%';
+        intensityValue.textContent = '50%';
         intensityControl.style.display = 'none';
     }
 });
@@ -136,6 +136,7 @@ slider.addEventListener('input', () => {
     if (slider.value == 0) {
         toggleSwitch.checked = false;
         slider.disabled = true;
+        intensityControl.style.display = 'none';
     }
 });
 
