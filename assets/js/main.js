@@ -90,6 +90,7 @@ if (!('NDEFReader' in window)) {
         } else {
             const message = `Message avec intensité: ${slider.value}`;
             console.log('Écriture du message:', message);
+            // implémenter l'écriture du message mdrrrr
             info.style.display = 'block';
             info.style.color = 'green';
             info.textContent = 'Message écrit avec succès!';
