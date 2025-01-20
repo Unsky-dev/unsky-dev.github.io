@@ -67,7 +67,6 @@ if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.
 // Gestion NFC
 if (!('NDEFReader' in window)) {
     const nfc = document.getElementById('nfc');
-    nfc.querySelector('#info').style.display = 'block';
     nfc.querySelector('#info').style.color = 'tomato';
     nfc.querySelector('#info').textContent = "La gestion NFC n'est pas supportée par votre navigateur.";
     nfc.querySelector('.writeButton').style.display = 'none';
