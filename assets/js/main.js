@@ -98,12 +98,22 @@ if (!('NDEFReader' in window)) {
                 isWriting = true;
             }
         } else {
+            const siteUrl = window.location.origin;
             const message = `Tag avec intensité: ${slider.value}`;
             console.log('Écriture du tag:', message);
-            // implémenter l'écriture du message mdrrrr
-            info.style.display = 'block';
-            info.style.color = 'green';
-            info.textContent = 'Tag écrit avec succès!';
+            try {
+                const ndef = new NDEFReader();
+                await ndef.write(`urldusite/tag/${slider.value}`);
+                console.log('URL écrite sur le tag:', `${siteUrl}/tag/${slider.value}`);
+                info.style.display = 'block';
+                info.style.color = 'green';
+                info.textContent = 'Tag écrit avec succès!';
+            } catch (error) {
+                console.error('Erreur lors de l\'écriture sur le tag NFC:', error);
+                info.style.display = 'block';
+                info.style.color = 'tomato';
+                info.textContent = 'Erreur lors de l\'écriture sur le tag NFC.';
+            }
             nfc.querySelector('.writeButton').textContent = 'Écrire un tag';
             nfc.querySelector('.scanButton').style.display = 'inline';
             isWriting = false;
