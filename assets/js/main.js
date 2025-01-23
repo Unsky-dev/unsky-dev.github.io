@@ -155,6 +155,8 @@ nfc.querySelector('.scanButton').addEventListener('click', async () => {
                 } else {
                     info.style.display = 'block';
                     info.style.color = 'tomato';
+                    console.log('record.data:', record.data);
+                    console.log('Le tag ne contient pas une URL valide.');
                     info.textContent = 'Ce tag n\'a pas été écrit par cette application.';
                 }
             } else {
@@ -162,7 +164,6 @@ nfc.querySelector('.scanButton').addEventListener('click', async () => {
                 info.style.color = 'tomato';
                 info.textContent = 'Ce tag ne contient pas une URL valide.';
             }
-            ndef.stop();
         });
     } catch (error) {
         console.error('Erreur lors de la lecture du tag NFC:', error);
