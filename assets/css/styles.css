@@ -4,6 +4,10 @@
     overflow-x: hidden;
 }
 
+html, body {
+  overscroll-behavior: none;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
