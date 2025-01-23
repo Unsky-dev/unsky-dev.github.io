@@ -132,6 +132,7 @@ if (!('NDEFReader' in window)) {
 }
 
 nfc.querySelector('.scanButton').addEventListener('click', async () => {
+    const siteUrl = window.location.origin;
     const info = document.getElementById('info');
     info.style.display = 'block';
     document.querySelector('.writeButton').style.display = 'none';
@@ -147,7 +148,7 @@ nfc.querySelector('.scanButton').addEventListener('click', async () => {
             if (record.recordType === 'url') {
                 const url = new TextDecoder().decode(record.data);
                 console.log('URL détectée:', url);
-                if (url === `${siteUrl}/tag/${slider.value}`) {
+                if (url == url.includes(`${siteUrl}/tag/`)) {
                     info.style.display = 'block';
                     info.style.color = 'green';
                     info.textContent = `Ce tag a été écrit avec l'intensité: ${slider.value}`;
