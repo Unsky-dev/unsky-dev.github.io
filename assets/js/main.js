@@ -130,6 +130,34 @@ if (!('NDEFReader' in window)) {
     });
 }
 
+nfc.querySelector('.scanButton').addEventListener('click', async () => {
+    const info = document.getElementById('info');
+    info.style.display = 'block';
+    info.textContent = 'Veuillez approcher le tag NFC...';
+    try {
+        const ndef = new NDEFReader();
+        ndef.scan();
+        ndef.addEventListener('reading', ({ message }) => {
+            console.log('Tag NFC détecté:', message);
+            if (data === `${siteUrl}/tag/${slider.value}`) {
+                info.style.display = 'block';
+                info.style.color = 'green';
+                info.textContent = `Ce tag a été écrit avec l'intensité: ${slider.value}`;
+            } else {
+                info.style.display = 'block';
+                info.style.color = 'tomato';
+                info.textContent = 'Ce tag n\'a pas été écrit par cette application.';
+            }
+            ndef.stop();
+        })
+    } catch (error) {
+        console.error('Erreur lors de la lecture du tag NFC:', error);
+        info.style.display = 'block';
+        info.style.color = 'tomato';
+        info.textContent = 'Erreur lors de la lecture du tag NFC.';
+    }
+});
+
 // Contrôle de l'intensité
 const slider = document.getElementById('intensity');
 const intensityValue = document.getElementById('intensity-value');
