@@ -136,20 +136,29 @@ nfc.querySelector('.scanButton').addEventListener('click', async () => {
     info.textContent = 'Veuillez approcher le tag NFC...';
     try {
         const ndef = new NDEFReader();
-        ndef.scan();
+        await ndef.scan();
         ndef.addEventListener('reading', ({ message }) => {
             console.log('Tag NFC détecté:', message);
-            if (data === `${siteUrl}/tag/${slider.value}`) {
-                info.style.display = 'block';
-                info.style.color = 'green';
-                info.textContent = `Ce tag a été écrit avec l'intensité: ${slider.value}`;
+            const record = message.records[0];
+            if (record.recordType === 'url') {
+                const url = new TextDecoder().decode(record.data);
+                console.log('URL détectée:', url);
+                if (url === `${siteUrl}/tag/${slider.value}`) {
+                    info.style.display = 'block';
+                    info.style.color = 'green';
+                    info.textContent = `Ce tag a été écrit avec l'intensité: ${slider.value}`;
+                } else {
+                    info.style.display = 'block';
+                    info.style.color = 'tomato';
+                    info.textContent = 'Ce tag n\'a pas été écrit par cette application.';
+                }
             } else {
                 info.style.display = 'block';
                 info.style.color = 'tomato';
-                info.textContent = 'Ce tag n\'a pas été écrit par cette application.';
+                info.textContent = 'Ce tag ne contient pas une URL valide.';
             }
             ndef.stop();
-        })
+        });
     } catch (error) {
         console.error('Erreur lors de la lecture du tag NFC:', error);
         info.style.display = 'block';
