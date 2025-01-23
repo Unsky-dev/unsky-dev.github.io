@@ -105,7 +105,14 @@ if (!('NDEFReader' in window)) {
             info.textContent = 'Veuillez approcher le tag NFC...';
             try {
                 const ndef = new NDEFReader();
-                await ndef.write(`${siteUrl}/tag/${slider.value}`);
+                await ndef.write({
+                    records: [
+                        {
+                            recordType: "url",
+                            data: `${siteUrl}/tag/${slider.value}`
+                        }
+                    ]
+                });
                 console.log('URL écrite sur le tag:', `${siteUrl}/tag/${slider.value}`);
                 info.style.display = 'block';
                 info.style.color = 'green';
