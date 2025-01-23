@@ -30,6 +30,13 @@ h3 {
     text-align: center;
 }
 
+button {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .container {
     text-align: center;
     padding: 20px;
