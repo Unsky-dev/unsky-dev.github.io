@@ -137,7 +137,7 @@ nfc.querySelector('.scanButton').addEventListener('click', async () => {
     info.style.display = 'block';
     document.querySelector('.writeButton').style.display = 'none';
     document.querySelector('.scanButton').style.display = 'none';
-    info.style.color = 'black';
+    info.style.color = 'grey';
     info.textContent = 'Veuillez approcher le tag NFC...';
     try {
         const ndef = new NDEFReader();
