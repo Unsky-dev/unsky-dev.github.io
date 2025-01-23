@@ -30,7 +30,7 @@ h3 {
     text-align: center;
 }
 
-button {
+button a {
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
