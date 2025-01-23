@@ -103,6 +103,7 @@ if (!('NDEFReader' in window)) {
             console.log('Écriture du tag:', message);
             info.style.display = 'block';
             info.textContent = 'Veuillez approcher le tag NFC...';
+            writeButton.display = 'none';
             try {
                 const ndef = new NDEFReader();
                 await ndef.write({
