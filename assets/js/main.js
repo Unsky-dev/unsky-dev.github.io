@@ -102,6 +102,7 @@ if (!('NDEFReader' in window)) {
             const message = `Tag avec intensité: ${slider.value}`;
             console.log('Écriture du tag:', message);
             info.style.display = 'block';
+            nfc.querySelector('.writeButton').style.display = 'none';
             info.textContent = 'Veuillez approcher le tag NFC...';
             try {
                 const ndef = new NDEFReader();
@@ -133,6 +134,8 @@ if (!('NDEFReader' in window)) {
 nfc.querySelector('.scanButton').addEventListener('click', async () => {
     const info = document.getElementById('info');
     info.style.display = 'block';
+    document.querySelector('.writeButton').style.display = 'none';
+    document.querySelector('.scanButton').style.display = 'none';
     info.textContent = 'Veuillez approcher le tag NFC...';
     try {
         const ndef = new NDEFReader();
