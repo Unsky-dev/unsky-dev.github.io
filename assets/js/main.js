@@ -101,6 +101,8 @@ if (!('NDEFReader' in window)) {
             const siteUrl = window.location.origin;
             const message = `Tag avec intensité: ${slider.value}`;
             console.log('Écriture du tag:', message);
+            info.style.display = 'block';
+            info.textContent = 'Veuillez approcher le tag NFC...';
             try {
                 const ndef = new NDEFReader();
                 await ndef.write(`${siteUrl}/tag/${slider.value}`);
