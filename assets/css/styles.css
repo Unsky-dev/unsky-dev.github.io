@@ -194,14 +194,15 @@ li {
     color: white;
     text-decoration: none;
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 0.8rem;
     margin-left: 5px;
     transition: background-color 0.2s ease-in-out;
     cursor: pointer;
     background-color: #58588e;
     border-radius: 5px;
     padding: 5px 10px;
-    max-width: 100%;
+    max-width: 90vw;
+    white-space: nowrap;
 }
 
 #nfc a:hover {
