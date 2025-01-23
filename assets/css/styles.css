@@ -30,12 +30,6 @@ h3 {
     text-align: center;
 }
 
-button, a {
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
 
 .container {
     text-align: center;
@@ -207,6 +201,7 @@ li {
     background-color: #58588e;
     border-radius: 5px;
     padding: 5px 10px;
+    max-width: 100%;
 }
 
 #nfc a:hover {
