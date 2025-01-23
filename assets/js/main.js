@@ -103,7 +103,7 @@ if (!('NDEFReader' in window)) {
             console.log('Écriture du tag:', message);
             try {
                 const ndef = new NDEFReader();
-                await ndef.write(`urldusite/tag/${slider.value}`);
+                await ndef.write(`${siteUrl}/tag/${slider.value}`);
                 console.log('URL écrite sur le tag:', `${siteUrl}/tag/${slider.value}`);
                 info.style.display = 'block';
                 info.style.color = 'green';
