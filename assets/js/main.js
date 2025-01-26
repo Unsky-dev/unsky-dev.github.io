@@ -178,19 +178,22 @@ const slider = document.getElementById('intensity');
 const intensityValue = document.getElementById('intensity-value');
 const toggleSwitch = document.getElementById('toggle-switch');
 const intensityControl = document.querySelector('.intensity-control');
+const statustext = document.getElementById('status-text');
 
-intensityControl.style.display = 'none';
 
 toggleSwitch.addEventListener('change', () => {
-    intensityValue.textContent = '50%';
     if (toggleSwitch.checked) {
+        intensityValue.textContent = '50%';
+        statustext.textContent = 'ON';
         slider.disabled = false;
-        intensityControl.style.display = 'block';
+        intensityControl.classList.add('visible');
         slider.value = 50;
     } else {
+        intensityValue.textContent = '0%';
+        statustext.textContent = 'OFF';
         slider.disabled = true;
         slider.value = 0;
-        intensityControl.style.display = 'none';
+        intensityControl.classList.remove('visible');
     }
 });
 
@@ -198,8 +201,7 @@ slider.addEventListener('input', () => {
     intensityValue.textContent = `${slider.value}%`;
     if (slider.value == 0) {
         toggleSwitch.checked = false;
-        slider.disabled = true;
-        intensityControl.style.display = 'none';
+        intensityControl.classList.remove('visible');
     }
 });
 

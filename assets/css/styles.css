@@ -34,7 +34,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 }
 
 header h1 {
@@ -102,6 +102,16 @@ header h1 {
   color: var(--primary-color);
 }
 
+.card h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: var(--primary-color);
+}
+
+.card p {
+  margin-bottom: 5px;
+}
+
 /* Switch */
 .switch-container {
   display: flex;
@@ -157,9 +167,20 @@ input:checked + .slider:before {
 
 /* Intensity Control */
 .intensity-control {
-  background-color: var(--background-color);
   border-radius: 8px;
+  padding: 0px;
+  transition: opacity 0.25s ease-in-out, max-height 0.25s ease-in-out, padding 0.2s ease-in-out;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.intensity-control.visible {
+  opacity: 1;
   padding: 15px;
+  max-height: 200px; 
+  pointer-events: auto; 
 }
 
 .intensity-header {
@@ -257,7 +278,23 @@ footer p {
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Adaptation pour les écrans très petits */
+@media (min-width: 1024px) {
+  #installButton {
+    bottom: 30px;
+    right: 30px;
+    padding: 12px 18px;
+    font-size: 1em;
+    background-color: #007bff; /* Couleur de fond */
+    color: #fff; /* Couleur du texte */
+    border-radius: 8px; /* Coins arrondis */
+  }
+
+  #installButton:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  }
+}
+
 @media (max-width: 350px) {
   #installButton {
       bottom: 10px;
