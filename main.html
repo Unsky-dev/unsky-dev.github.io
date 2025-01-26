@@ -1,84 +1,120 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lumière</title>
-  <link rel="stylesheet" href="assets/css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>OpenLuminate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="shortcut icon" href="assets/img/icon.png" type="image/png">
+    <link rel="manifest" href="manifest.webmanifest">
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Lumière</h1>
-    </header>
-    <main>
-      <!-- Interrupteur -->
-      <div class="container" style="
-      padding-bottom: 0px;
-      padding-top: 0px;
-      padding-left: 6%;
-      padding-right: 6%;
-      ">
-        <div class="switch-container">
-          <div class="status-container">
-            <span id="status-text">Éteint</span>
-          </div>
-          <label class="toggle">
-            <input type="checkbox" id="light-switch">
-            <span class="slider"></span>
-          </label>
-        </div>
-      </div>
+    <div class="app-container">
+        <header>
+            <h1>OpenLuminate</h1>
+        </header>
 
-      <!-- Conteneur de luminosité -->
-      <div id="brightness-section" class="hidden">
-        <span>Luminosité : <span id="brightness-level">50%</span></span>
-        <div class="progress-bar">
-        </div>
-        <input type="range" id="brightness-slider" min="0" max="100" value="50">
-      </div>
+        <main>
+            <section class="control-section">
+                <div class="card">
+                    <h2>Contrôle du Luminaire</h2>
+                    <div class="switch-container">
+                        <span id="status-text">Éteint</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="toggle-switch">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
 
-      <!-- Section NFC -->
-      <div class="nfc-container" id="nfc">
-        <h3>Interrupteur (NFC)</h3>
-        <p id="info">Écrivez un tag NFC pour allumer ou éteindre la lumière</p>
-        <div class="nfc-buttons">
-          <button class="writeButton" id="write-tag">✏️ Écrire un Tag</button>
-          <button class="scanButton" id="test-tag">▶️ Tester un Tag</button>
-        </div>
-      </div>
-      
+                    <div class="intensity-control">
+                        <div class="intensity-header">
+                            <label for="intensity">Intensité</label>
+                            <span id="intensity-value">0%</span>
+                        </div>
+                        <input type="range" id="intensity" class="slider-input" min="0" max="100" value="0" disabled>
+                    </div>
+                </div>
+            </section>
 
-      <!-- Présentation du Projet -->
-      <div class="container">
-        <h2>Présentation du Projet</h2>
-        <p>Ce projet vise à créer un système de contrôle de luminaire interactif, permettant aux utilisateurs de gérer l’intensité de l’éclairage.</p>
-      </div>
+            <section class="nfc-section" id="nfc">
+                <div class="card">
+                    <h2>Interrupteur NFC</h2>
+                    <p id="info" class="nfc-info">Écrivez un tag NFC pour contrôler la lumière</p>
+                    <div class="nfc-actions">
+                        <a class="btn btn-secondary writeButton">Écrire un tag</a>
+                        <a class="btn btn-outline scanButton">Tester un tag</a>
+                    </div>
+                </div>
+            </section>
 
-      <!-- Auteurs -->
-      <div class="container">
-        <h2>Auteurs</h2>
-        <p>Charly Meriano</p>
-        <p>Fabien Peronnet</p>
-        <p>Nathan Pruvost</p>
-        <p>Louai Ouerghi</p>
-      </div>
+            <section class="project-info">
+                <div class="card">
+                    <h2>Présentation du Projet</h2>
+                    <p>Un système de contrôle de luminaire interactif permettant de gérer l'intensité de l'éclairage à distance.</p>
+                    
+                    <div class="project-details">
+                        <div class="detail-section">
+                            <h3>Auteurs</h3>
+                            <ul>
+                                <li>Charly Meriano</li>
+                                <li>Fabien Peronnet</li>
+                                <li>Nathan Pruvost</li>
+                                <li>Louai Ouerghi</li>
+                            </ul>
+                        </div>
 
-      <!-- Objectifs -->
-      <div class="container">
-        <h2>Objectifs</h2>
-        <p>Permettre le contrôle à distance de l’éclairage.</p>
-        <p>Offrir une interface utilisateur intuitive.</p>
-      </div>
+                        <div class="detail-section">
+                            <h3>Objectifs</h3>
+                            <ul>
+                                <li>Contrôle à distance de l'éclairage</li>
+                                <li>Interface utilisateur intuitive</li>
+                            </ul>
+                        </div>
 
-      <!-- Fonctionnalités -->
-      <div class="container">
-        <h2>Fonctionnalités</h2>
-        <p>Contrôle de l’intensité lumineuse.</p>
-        <p>Statut d'allumage/extinction.</p>
-      </div>
-    </main>
-  </div>
-  <script src="assets/js/main.js"></script>
+                        <div class="detail-section">
+                            <h3>Fonctionnalités</h3>
+                            <ul>
+                                <li>Contrôle de l'intensité lumineuse</li>
+                                <li>Statut d'allumage/extinction</li>
+                                <li>Contrôle via tag NFC</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <a href="https://GitHub.com/unsky-dev/unsky-dev.github.io" class="btn btn-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                        </svg>
+                        Code Source
+                    </a>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <button id="resetButton" class="btn btn-danger">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 2v6h6"></path>
+                    <path d="M21 12A9 9 0 0 0 6 5.3L3 8"></path>
+                    <path d="M21 22v-6h-6"></path>
+                    <path d="M3 12a9 9 0 0 0 15 6.7l3-3"></path>
+                </svg>
+                Réinitialiser l'application
+            </button>
+            <p>© 2024-2025 Projet Luminaire V1 BETA - Tous droits réservés</p>
+        </footer>
+
+        <button id="installButton" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Installer
+        </button>
+    </div>
+
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
