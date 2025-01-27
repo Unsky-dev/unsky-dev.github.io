@@ -109,13 +109,14 @@ if (!('NDEFReader' in window)) {
                 updateInfoMessage('Veuillez choisir une intensité supérieure à 0%.', 'tomato');
             } else {
                 nfc.querySelector('.scanButton').style.display = 'none';
-                updateInfoMessage(`Cela va écrire avec l'intensité définie: ${slider.value}`, 'tomato');
+                const writingValue = slider.value;
+                updateInfoMessage(`Cela va écrire avec l'intensité définie: ${writingValue}`, 'tomato');
                 nfc.querySelector('.writeButton').textContent = 'Confirmer l\'écriture';
                 isWriting = true;
             }
         } else {
             const siteUrl = window.location.origin;
-            const message = `Tag avec intensité: ${slider.value}`;
+            const message = `Tag avec intensité: ${writingValue}`;
             console.log('Écriture du tag:', message);
             updateInfoMessage('Veuillez approcher le tag NFC...', 'gray');
             nfc.querySelector('.writeButton').style.display = 'none';
@@ -128,11 +129,11 @@ if (!('NDEFReader' in window)) {
                     records: [
                         {
                             recordType: "url",
-                            data: `${siteUrl}/tag/${slider.value}`
+                            data: `${siteUrl}/tag/${writingValue}`
                         }
                     ]
                 });
-                console.log('URL écrite sur le tag:', `${siteUrl}/tag/${slider.value}`);
+                console.log('URL écrite sur le tag:', `${siteUrl}/tag/${writingValue}`);
                 updateInfoMessage('Tag écrit avec succès!', 'green');
             } catch (error) {
                 console.error('Erreur lors de l\'écriture sur le tag NFC:', error);
