@@ -179,6 +179,7 @@ if (!('NDEFReader' in window)) {
             updateInfoMessage('Erreur lors de la lecture du tag NFC.', 'tomato');
         }
 
+        // Réafficher les boutons après la lecture
         toggleButtons(false); // Réafficher les boutons après la lecture
     });
 }
