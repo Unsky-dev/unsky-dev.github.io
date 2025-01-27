@@ -35,6 +35,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-direction: column;
   margin-bottom: 50px;
 }
 
@@ -42,6 +43,14 @@ header h1 {
   font-size: 24px;
   font-weight: 700;
   color: var(--primary-color);
+}
+
+.line {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    margin: 0 auto;
+    margin-top: 10px;
 }
 
 /* Buttons */
@@ -169,8 +178,7 @@ input:checked + .slider:before {
 /* Intensity Control */
 .intensity-control {
   border-radius: 8px;
-  padding: 0px;
-  transition: opacity 0.25s ease-in-out, max-height 0.25s ease-in-out, padding 0.2s ease-in-out;
+  transition: opacity 0.5s ease-in-out, max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
   opacity: 0;
   max-height: 0;
   overflow: hidden;
@@ -179,7 +187,6 @@ input:checked + .slider:before {
 
 .intensity-control.visible {
   opacity: 1;
-  padding: 15px;
   max-height: 200px; 
   pointer-events: auto; 
 }
@@ -309,5 +316,59 @@ footer p {
 @media (max-width: 600px) {
   .project-info .project-details {
       grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-color: #753eab;    
+    --secondary-color: #2e63a0;   
+    --background-color: #121212;  
+    --text-color: #e0e0e0;        
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  .card {
+    background-color: #1e1e1e;    
+  }
+
+  .btn-secondary {
+    background-color: rgba(157, 84, 230, 0.15);  
+  }
+
+  .btn-link {
+    color: var(--secondary-color);  
+  }
+
+  .nfc-section .nfc-info {
+    color: #a0a0a0;  
+  }
+
+  footer p {
+    color: #a0a0a0;  
+  }
+
+  .slider {
+    background-color: #404040;  
+  }
+
+  .slider:before {
+    background-color: #e0e0e0;  
+  }
+
+  .detail-section ul li {
+    color: var(--text-color);
+  }
+
+  #installButton {
+    background-color: #2575fc;  
+  }
+
+  .btn:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  }
+
+  #installButton:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
   }
 }
