@@ -72,18 +72,6 @@ function updateInfoMessage(message, color) {
     info.textContent = message;
 }
 
-// Fonction pour désactiver les boutons
-function disableButtons() {
-    document.querySelector('.writeButton').disabled = true;
-    document.querySelector('.scanButton').disabled = true;
-}
-
-// Fonction pour réactiver les boutons
-function enableButtons() {
-    document.querySelector('.writeButton').disabled = false;
-    document.querySelector('.scanButton').disabled = false;
-}
-
 // Vérifier si NFC est supporté
 if (!('NDEFReader' in window)) {
     const nfc = document.getElementById('nfc');
@@ -98,6 +86,19 @@ if (!('NDEFReader' in window)) {
 
     let isWriting = false;
     const slider = document.getElementById('intensity');
+
+    // Fonction pour désactiver/activer les boutons
+    function toggleButtons(disable) {
+        const writeButton = nfc.querySelector('.writeButton');
+        const scanButton = nfc.querySelector('.scanButton');
+        if (disable) {
+            writeButton.disabled = true;
+            scanButton.disabled = true;
+        } else {
+            writeButton.disabled = false;
+            scanButton.disabled = false;
+        }
+    }
 
     // Écriture du tag
     nfc.querySelector('.writeButton').addEventListener('click', async () => {
@@ -119,7 +120,7 @@ if (!('NDEFReader' in window)) {
             updateInfoMessage('Veuillez approcher le tag NFC...', 'gray');
             nfc.querySelector('.writeButton').style.display = 'none';
 
-            disableButtons(); // Désactiver les boutons pendant l'écriture
+            toggleButtons(true); // Désactiver les boutons pendant l'écriture
 
             try {
                 const ndef = new NDEFReader();
@@ -141,7 +142,7 @@ if (!('NDEFReader' in window)) {
             nfc.querySelector('.writeButton').textContent = 'Écrire un tag';
             nfc.querySelector('.scanButton').style.display = 'inline';
 
-            enableButtons(); // Réactiver les boutons après l'écriture
+            toggleButtons(false); // Réactiver les boutons après l'écriture
             isWriting = false;
         }
     });
@@ -152,7 +153,7 @@ if (!('NDEFReader' in window)) {
         const info = document.getElementById('info');
         updateInfoMessage('Veuillez approcher le tag NFC...', 'gray');
 
-        disableButtons(); // Désactiver les boutons pendant la lecture
+        toggleButtons(true); // Désactiver les boutons pendant la lecture
 
         try {
             const ndef = new NDEFReader();
@@ -177,10 +178,9 @@ if (!('NDEFReader' in window)) {
             updateInfoMessage('Erreur lors de la lecture du tag NFC.', 'tomato');
         }
 
-        enableButtons(); // Réactiver les boutons après la lecture
+        toggleButtons(false); // Réactiver les boutons après la lecture
     });
 }
-
 // Contrôle de l'intensité
 const slider = document.getElementById('intensity');
 const intensityValue = document.getElementById('intensity-value');
