@@ -93,9 +93,11 @@ if (!('NDEFReader' in window)) {
         const writeButton = nfc.querySelector('.writeButton');
         const scanButton = nfc.querySelector('.scanButton');
         if (disable) {
+            console.log('Désactivation des boutons...');
             writeButton.style.display = 'none';
             scanButton.style.display = 'none';
         } else {
+            console.log('Activation des boutons...');
             writeButton.style.display = 'inline'; // Réaffiche les boutons
             scanButton.style.display = 'inline'; // Réaffiche les boutons
         }
@@ -109,6 +111,7 @@ if (!('NDEFReader' in window)) {
             if (slider.value == 0 || slider.disabled) {
                 updateInfoMessage('Veuillez choisir une intensité supérieure à 0%.', 'tomato');
             } else {
+                writingValue = slider.value;
                 nfc.querySelector('.scanButton').style.display = 'none';
                 updateInfoMessage(`Cela va écrire avec l'intensité définie: ${writingValue}`, 'tomato');
                 nfc.querySelector('.writeButton').textContent = 'Confirmer l\'écriture';
@@ -120,7 +123,7 @@ if (!('NDEFReader' in window)) {
             console.log('Écriture du tag:', message);
             updateInfoMessage('Veuillez approcher le tag NFC...', 'gray');
 
-            toggleButtons(true); // Masquer les boutons pendant l'écriture
+            toggleButtons(true);
 
             try {
                 const ndef = new NDEFReader();
@@ -154,11 +157,15 @@ if (!('NDEFReader' in window)) {
         const info = document.getElementById('info');
         updateInfoMessage('Veuillez approcher le tag NFC...', 'gray');
 
+        const abortController = new AbortController();
+        const signal = abortController.signal;
+
+
         toggleButtons(true); // Masquer les boutons pendant la lecture
 
         try {
             const ndef = new NDEFReader();
-            await ndef.scan();
+            await ndef.scan({ signal });
             ndef.addEventListener('reading', ({ message }) => {
                 console.log('Tag NFC détecté:', message);
                 const record = message.records[0];
