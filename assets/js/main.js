@@ -85,8 +85,8 @@ if (!('NDEFReader' in window)) {
     nfc.style.display = 'block';
 
     let isWriting = false;
-    const writingValue = slider.value;
     const slider = document.getElementById('intensity');
+    const writingValue = slider.value;
 
     // Fonction pour masquer/afficher les boutons
     function toggleButtons(disable) {
@@ -119,7 +119,6 @@ if (!('NDEFReader' in window)) {
             const message = `Tag avec intensité: ${writingValue}`;
             console.log('Écriture du tag:', message);
             updateInfoMessage('Veuillez approcher le tag NFC...', 'gray');
-            nfc.querySelector('.writeButton').style.display = 'none';
 
             toggleButtons(true); // Masquer les boutons pendant l'écriture
 

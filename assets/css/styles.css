@@ -34,7 +34,7 @@ body {
 header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: left;
   flex-direction: column;
   margin-bottom: 40px;
 }
