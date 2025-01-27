@@ -1,5 +1,3 @@
-
-
 // Vérification et enregistrement du Service Worker
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js')
@@ -66,13 +64,31 @@ if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.
     installButton.style.display = 'none';
 }
 
-// Gestion NFC
+// Fonction pour mettre à jour le message d'info
+function updateInfoMessage(message, color) {
+    const info = document.getElementById('info');
+    info.style.display = 'block';
+    info.style.color = color;
+    info.textContent = message;
+}
+
+// Fonction pour désactiver les boutons
+function disableButtons() {
+    document.querySelector('.writeButton').disabled = true;
+    document.querySelector('.scanButton').disabled = true;
+}
+
+// Fonction pour réactiver les boutons
+function enableButtons() {
+    document.querySelector('.writeButton').disabled = false;
+    document.querySelector('.scanButton').disabled = false;
+}
+
+// Vérifier si NFC est supporté
 if (!('NDEFReader' in window)) {
     const nfc = document.getElementById('nfc');
     nfc.style.display = 'block';
-    nfc.querySelector('#info').style.display = 'block';
-    nfc.querySelector('#info').style.color = 'tomato';
-    nfc.querySelector('#info').textContent = "La gestion NFC n'est pas supportée par votre navigateur.";
+    updateInfoMessage("La gestion NFC n'est pas supportée par votre navigateur.", 'tomato');
     nfc.querySelector('.writeButton').style.display = 'none';
     nfc.querySelector('.scanButton').style.display = 'none';
     console.log('NFC non supporté.');
@@ -81,21 +97,18 @@ if (!('NDEFReader' in window)) {
     nfc.style.display = 'block';
 
     let isWriting = false;
+    const slider = document.getElementById('intensity');
 
+    // Écriture du tag
     nfc.querySelector('.writeButton').addEventListener('click', async () => {
         const info = document.getElementById('info');
-        const slider = document.getElementById('intensity');
 
         if (!isWriting) {
             if (slider.value == 0 || slider.disabled) {
-                info.style.display = 'block';
-                info.style.color = 'tomato';
-                info.textContent = 'Veuillez choisir une intensité supérieure à 0%.';
+                updateInfoMessage('Veuillez choisir une intensité supérieure à 0%.', 'tomato');
             } else {
                 nfc.querySelector('.scanButton').style.display = 'none';
-                info.style.display = 'block';
-                info.style.color = 'tomato';
-                info.textContent = `Cela va écrire avec l'intensité définie: ${slider.value}`;
+                updateInfoMessage(`Cela va écrire avec l'intensité définie: ${slider.value}`, 'tomato');
                 nfc.querySelector('.writeButton').textContent = 'Confirmer l\'écriture';
                 isWriting = true;
             }
@@ -103,9 +116,11 @@ if (!('NDEFReader' in window)) {
             const siteUrl = window.location.origin;
             const message = `Tag avec intensité: ${slider.value}`;
             console.log('Écriture du tag:', message);
-            info.style.display = 'block';
+            updateInfoMessage('Veuillez approcher le tag NFC...', 'gray');
             nfc.querySelector('.writeButton').style.display = 'none';
-            info.textContent = 'Veuillez approcher le tag NFC...';
+
+            disableButtons(); // Désactiver les boutons pendant l'écriture
+
             try {
                 const ndef = new NDEFReader();
                 await ndef.write({ 
@@ -117,63 +132,54 @@ if (!('NDEFReader' in window)) {
                     ]
                 });
                 console.log('URL écrite sur le tag:', `${siteUrl}/tag/${slider.value}`);
-                info.style.display = 'block';
-                info.style.color = 'green';
-                info.textContent = 'Tag écrit avec succès!';
+                updateInfoMessage('Tag écrit avec succès!', 'green');
             } catch (error) {
                 console.error('Erreur lors de l\'écriture sur le tag NFC:', error);
-                info.style.display = 'block';
-                info.style.color = 'tomato';
-                info.textContent = 'Erreur lors de l\'écriture sur le tag NFC.';
+                updateInfoMessage('Erreur lors de l\'écriture sur le tag NFC.', 'tomato');
             }
+
             nfc.querySelector('.writeButton').textContent = 'Écrire un tag';
             nfc.querySelector('.scanButton').style.display = 'inline';
+
+            enableButtons(); // Réactiver les boutons après l'écriture
             isWriting = false;
         }
     });
-}
 
-nfc.querySelector('.scanButton').addEventListener('click', async () => {
-    const siteUrl = window.location.origin;
-    const info = document.getElementById('info');
-    info.style.display = 'block';
-    document.querySelector('.writeButton').style.display = 'none';
-    document.querySelector('.scanButton').style.display = 'none';
-    info.style.color = 'gray';
-    info.textContent = 'Veuillez approcher le tag NFC...';
-    try {
-        const ndef = new NDEFReader();
-        await ndef.scan();
-        ndef.addEventListener('reading', ({ message }) => {
-            console.log('Tag NFC détecté:', message);
-            const record = message.records[0];
-            if (record.recordType === 'url') {
-                const url = new TextDecoder().decode(record.data);
-                console.log('URL détectée:', url);
-                if (url == url.includes(`${siteUrl}/tag/`)) {
-                    info.style.display = 'block';
-                    info.style.color = 'green';
-                    info.textContent = `Ce tag a été écrit avec l'intensité: ${slider.value}`;
+    // Lecture du tag NFC
+    nfc.querySelector('.scanButton').addEventListener('click', async () => {
+        const siteUrl = window.location.origin;
+        const info = document.getElementById('info');
+        updateInfoMessage('Veuillez approcher le tag NFC...', 'gray');
+
+        disableButtons(); // Désactiver les boutons pendant la lecture
+
+        try {
+            const ndef = new NDEFReader();
+            await ndef.scan();
+            ndef.addEventListener('reading', ({ message }) => {
+                console.log('Tag NFC détecté:', message);
+                const record = message.records[0];
+                if (record.recordType === 'url') {
+                    const url = new TextDecoder().decode(record.data);
+                    console.log('URL détectée:', url);
+                    if (url.startsWith(`${siteUrl}/tag/`)) {
+                        updateInfoMessage(`Ce tag a été écrit avec l'intensité: ${slider.value}`, 'green');
+                    } else {
+                        updateInfoMessage('Ce tag n\'a pas été écrit par cette application.', 'tomato');
+                    }
                 } else {
-                    info.style.display = 'block';
-                    info.style.color = 'tomato';
-                    console.log('record.data:', record.data);
-                    console.log('Le tag ne contient pas une URL valide.');
-                    info.textContent = 'Ce tag n\'a pas été écrit par cette application.';
+                    updateInfoMessage('Ce tag ne contient pas une URL valide.', 'tomato');
                 }
-            } else {
-                info.style.display = 'block';
-                info.style.color = 'tomato';
-                info.textContent = 'Ce tag ne contient pas une URL valide.';
-            }
-        });
-    } catch (error) {
-        console.error('Erreur lors de la lecture du tag NFC:', error);
-        info.style.display = 'block';
-        info.style.color = 'tomato';
-        info.textContent = 'Erreur lors de la lecture du tag NFC.';
-    }
-});
+            });
+        } catch (error) {
+            console.error('Erreur lors de la lecture du tag NFC:', error);
+            updateInfoMessage('Erreur lors de la lecture du tag NFC.', 'tomato');
+        }
+
+        enableButtons(); // Réactiver les boutons après la lecture
+    });
+}
 
 // Contrôle de l'intensité
 const slider = document.getElementById('intensity');

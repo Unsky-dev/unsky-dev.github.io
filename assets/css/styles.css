@@ -36,7 +36,7 @@ header {
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 }
 
 header h1 {
@@ -89,6 +89,7 @@ header h1 {
 .btn-danger {
   background-color: #ff4d4d;
   color: white;
+  margin-top: 20px;
 }
 
 .btn-link {
@@ -262,7 +263,6 @@ input:checked + .slider:before {
 /* Footer */
 footer {
   text-align: center;
-  padding: 20px 0;
 }
 
 footer p {
