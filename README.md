@@ -56,7 +56,7 @@ L'application peut être installée sur les appareils mobiles et de bureau grâc
 
 ### 🤝 Co-Auteurs
 
- - Secret mdrrr : Design UI/UX
+ - Ethan Caillat : Design UI/UX
 
 ## 💡 Support NFC
 
