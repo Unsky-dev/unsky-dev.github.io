@@ -3,7 +3,7 @@
   "short_name": "Luminate",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#6b11cb57",
+  "background_color": "#4a00e0",
   "theme_color": "#6b11cb57",
   "description": "Application de contrôle de luminaire.",
   "icons": [
