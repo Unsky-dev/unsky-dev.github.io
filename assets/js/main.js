@@ -86,7 +86,7 @@ if (!('NDEFReader' in window)) {
 
     let isWriting = false;
     const slider = document.getElementById('intensity');
-    const writingValue = slider.value;
+    let writingValue = slider.value;
 
     // Fonction pour masquer/afficher les boutons
     function toggleButtons(disable) {
