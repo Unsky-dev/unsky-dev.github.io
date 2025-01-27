@@ -172,8 +172,11 @@ if (!('NDEFReader' in window)) {
                 if (record.recordType === 'url') {
                     const url = new TextDecoder().decode(record.data);
                     console.log('URL détectée:', url);
+
+                    const match = url.match(/\/tag\/(\d+)/);
+
                     if (url.startsWith(`${siteUrl}/tag/`)) {
-                        updateInfoMessage(`Ce tag a été écrit avec l'intensité: ${slider.value}`, 'green');
+                        updateInfoMessage(`Ce tag a été écrit avec l'intensité: ${match[1]}`, 'green');
                     } else {
                         updateInfoMessage('Ce tag n\'a pas été écrit par cette application.', 'tomato');
                     }
