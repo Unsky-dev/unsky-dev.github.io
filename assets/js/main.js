@@ -139,6 +139,7 @@ if (!('NDEFReader' in window)) {
                 updateInfoMessage('Erreur lors de l\'écriture sur le tag NFC.', 'tomato');
             }
 
+            // Réinitialiser le bouton après l'écriture
             nfc.querySelector('.writeButton').textContent = 'Écrire un tag';
             nfc.querySelector('.scanButton').style.display = 'inline';
 
