@@ -87,16 +87,16 @@ if (!('NDEFReader' in window)) {
     let isWriting = false;
     const slider = document.getElementById('intensity');
 
-    // Fonction pour désactiver/activer les boutons
+    // Fonction pour masquer/afficher les boutons
     function toggleButtons(disable) {
         const writeButton = nfc.querySelector('.writeButton');
         const scanButton = nfc.querySelector('.scanButton');
         if (disable) {
-            writeButton.disabled = true;
-            scanButton.disabled = true;
+            writeButton.style.display = 'none';
+            scanButton.style.display = 'none';
         } else {
-            writeButton.disabled = false;
-            scanButton.disabled = false;
+            writeButton.style.display = 'inline'; // Réaffiche les boutons
+            scanButton.style.display = 'inline'; // Réaffiche les boutons
         }
     }
 
@@ -120,7 +120,7 @@ if (!('NDEFReader' in window)) {
             updateInfoMessage('Veuillez approcher le tag NFC...', 'gray');
             nfc.querySelector('.writeButton').style.display = 'none';
 
-            toggleButtons(true); // Désactiver les boutons pendant l'écriture
+            toggleButtons(true); // Masquer les boutons pendant l'écriture
 
             try {
                 const ndef = new NDEFReader();
@@ -142,7 +142,7 @@ if (!('NDEFReader' in window)) {
             nfc.querySelector('.writeButton').textContent = 'Écrire un tag';
             nfc.querySelector('.scanButton').style.display = 'inline';
 
-            toggleButtons(false); // Réactiver les boutons après l'écriture
+            toggleButtons(false); // Réafficher les boutons après l'écriture
             isWriting = false;
         }
     });
@@ -153,7 +153,7 @@ if (!('NDEFReader' in window)) {
         const info = document.getElementById('info');
         updateInfoMessage('Veuillez approcher le tag NFC...', 'gray');
 
-        toggleButtons(true); // Désactiver les boutons pendant la lecture
+        toggleButtons(true); // Masquer les boutons pendant la lecture
 
         try {
             const ndef = new NDEFReader();
@@ -178,9 +178,10 @@ if (!('NDEFReader' in window)) {
             updateInfoMessage('Erreur lors de la lecture du tag NFC.', 'tomato');
         }
 
-        toggleButtons(false); // Réactiver les boutons après la lecture
+        toggleButtons(false); // Réafficher les boutons après la lecture
     });
 }
+
 // Contrôle de l'intensité
 const slider = document.getElementById('intensity');
 const intensityValue = document.getElementById('intensity-value');
