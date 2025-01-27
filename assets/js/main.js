@@ -85,6 +85,7 @@ if (!('NDEFReader' in window)) {
     nfc.style.display = 'block';
 
     let isWriting = false;
+    const writingValue = slider.value;
     const slider = document.getElementById('intensity');
 
     // Fonction pour masquer/afficher les boutons
@@ -109,7 +110,6 @@ if (!('NDEFReader' in window)) {
                 updateInfoMessage('Veuillez choisir une intensité supérieure à 0%.', 'tomato');
             } else {
                 nfc.querySelector('.scanButton').style.display = 'none';
-                const writingValue = slider.value;
                 updateInfoMessage(`Cela va écrire avec l'intensité définie: ${writingValue}`, 'tomato');
                 nfc.querySelector('.writeButton').textContent = 'Confirmer l\'écriture';
                 isWriting = true;
@@ -182,7 +182,7 @@ if (!('NDEFReader' in window)) {
         }
 
         // Réafficher les boutons après la lecture
-        toggleButtons(false); // Réafficher les boutons après la lecture
+        toggleButtons(false);
     });
 }
 
