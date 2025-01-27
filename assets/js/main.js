@@ -180,7 +180,6 @@ if (!('NDEFReader' in window)) {
                 } else {
                     updateInfoMessage('Ce tag ne contient pas une URL valide.', 'tomato');
                 }
-                ndef.cancel();
             });
         } catch (error) {
             console.error('Erreur lors de la lecture du tag NFC:', error);
