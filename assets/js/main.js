@@ -83,7 +83,6 @@ if (!('NDEFReader' in window)) {
 } else {
     const nfc = document.getElementById('nfc');
     nfc.style.display = 'block';
-
     let isWriting = false;
     const slider = document.getElementById('intensity');
     let writingValue = slider.value;
