@@ -159,12 +159,14 @@ if (!('NDEFReader' in window)) {
         const abortController = new AbortController();
         const signal = abortController.signal;
 
-
+        console.log('Désactivation des boutons pour la lecture...');
         toggleButtons(true); // Masquer les boutons pendant la lecture
 
         try {
             const ndef = new NDEFReader();
+            console.log('Démarrage de la lecture du tag NFC...');
             await ndef.scan({ signal });
+            console.log('Lecture du tag NFC en cours...');
             ndef.addEventListener('reading', ({ message }) => {
                 console.log('Tag NFC détecté:', message);
                 const record = message.records[0];
@@ -188,8 +190,8 @@ if (!('NDEFReader' in window)) {
             updateInfoMessage('Erreur lors de la lecture du tag NFC.', 'tomato');
         }
 
-        // Réafficher les boutons après la lecture
-        toggleButtons(false);
+        console.log('Activation des boutons après la lecture...');
+        toggleButtons(false); // Réafficher les boutons après la lecture
     });
 }
 
