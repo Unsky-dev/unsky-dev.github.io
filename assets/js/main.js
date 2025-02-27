@@ -222,6 +222,7 @@ toggleSwitch.addEventListener('change', () => {
 slider.addEventListener('input', () => {
     intensityValue.textContent = `${slider.value}%`;
     if (slider.value == 0) {
+        statustext.textContent = 'OFF';
         toggleSwitch.checked = false;
         intensityControl.classList.remove('visible');
     }
