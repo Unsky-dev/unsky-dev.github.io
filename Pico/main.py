@@ -3,19 +3,19 @@ import socket
 from machine import Pin, PWM
 import os
 
-#sortie PWM
+# PWM output
 led = PWM(Pin(15))
 led.freq(1000)  # PWM Frequency
 
-# Acces Point
+# Access Point
 SSID = "Pico_Wifi"
 PASSWORD = "12345678"
 ap = network.WLAN(network.AP_IF)
 ap.active(True)
 ap.config(essid=SSID, password=PASSWORD)
 
-print("Réseau WiFi créé :", SSID)
-print("IP du Pico :", ap.ifconfig()[0])  # 192.168.4.1
+print("WiFi network created:", SSID)
+print("Pico IP:", ap.ifconfig()[0])  # 192.168.4.1
 
 def get_content_type(path):
     if path.endswith(".html"):
@@ -41,15 +41,15 @@ def web_server():
     s = socket.socket()
     s.bind(addr)
     s.listen(5)
-    print("Serveur en attente de connexions...")
+    print("Server waiting for connections...")
 
     while True:
         conn, addr = s.accept()
         request = conn.recv(1024).decode("utf-8")
-        print("Requête reçue :", request)
+        print("Request received:", request)
         response = ""
 
-        # Récupérer la première ligne de la requête
+        # Get the first line of the request
         try:
             request_line = request.split("\n")[0]
             method, path, _ = request_line.split()
@@ -64,31 +64,31 @@ def web_server():
             conn.close()
             continue
 
-        # 🎛️ LED controle (/led?value=...)
+        # LED control (/led?value=...)
         if path.startswith("/led?value="):
             try:
                 value_str = path.split("led?value=")[1]
                 value = int(value_str)
-                value = max(0, min(value, 100))  # Limite entre 0 et 100
+                value = max(0, min(value, 100))  # Limit between 0 and 100
                 led.duty_u16(int(value * 65535 / 100))
-                response = f"LED réglée à {value}%"
+                response = f"LED set to {value}%"
             except:
-                response = "Erreur de valeur"
+                response = "Value error"
             conn.send("HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n" + response)
             conn.close()
             continue
 
 
-        # 📄 Servir les fichiers statiques de la PWA
-        # Si le chemin est "/", servir index.html
+        # Serve static files of the PWA
+        # If the path is "/", serve index.html
         if path == "/":
             path = "/index.html"
 
-        # Enlever les éventuels paramètres de requête
+        # Remove any query parameters
         if "?" in path:
             path = path.split("?")[0]
 
-        # Construire le chemin du fichier sur le système de fichiers (supprimer le "/" initial)
+        # Build the file path on the file system (remove the initial "/")
         file_path = path.lstrip("/")
 
         try:
@@ -98,7 +98,7 @@ def web_server():
             header = "HTTP/1.1 200 OK\r\nContent-Type: " + content_type + "\r\n\r\n"
             conn.send(header + file_data)
         except Exception as e:
-            error_message = "Fichier introuvable"
+            error_message = "File not found"
             header = "HTTP/1.1 404 Not Found\r\nContent-Type: text/plain\r\n\r\n"
             conn.send(header + error_message)
 
