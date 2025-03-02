@@ -10,11 +10,18 @@
 </head>
 <body>
     <script>
-        if (navigator.onLine) {
-            window.location.href = "main.html";
-        } else {
-            window.location.href = "offline.html";
-        }
+        fetch('/status')
+            .then(response => response.text())
+            .then(status => {
+                if (status === 'OK') {
+                    window.location.href = "main.html";
+                } else {
+                    window.location.href = "offline.html";
+                }
+            })
+            .catch(() => {
+                window.location.href = "offline.html";
+            });
     </script>
 </body>
 </html>
