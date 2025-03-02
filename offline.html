@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hors Ligne</title>
-<link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
     <h1>Impossible d'obtenir l'état de votre lampe</h1>
@@ -12,11 +12,18 @@
     <div id="status">Vérification de la connexion<span id="dots">...</span></div>
     <script>
         function checkConnection() {
-            if (navigator.onLine) {
-                window.location.href = "index.html";
-            } else {
-                document.getElementById('status').innerText = "Toujours hors ligne...";
-            }
+            fetch('/status')
+                .then(response => response.text())
+                .then(status => {
+                    if (status === 'OK') {
+                        window.location.href = "index.html";
+                    } else {
+                        document.getElementById('status').innerText = "Toujours hors ligne...";
+                    }
+                })
+                .catch(() => {
+                    document.getElementById('status').innerText = "Toujours hors ligne...";
+                });
         }
 
         function animateDots() {
@@ -30,7 +37,7 @@
 
         window.onload = function() {
             animateDots();
-            checkConnection();
+            setInterval(checkConnection, 5000); // Vérifie la connexion toutes les 5 secondes
         };
     </script>
 </body>
