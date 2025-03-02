@@ -39,7 +39,6 @@ if ('serviceWorker' in navigator) {
 // Gestion de l'installation de l'application
 let deferredPrompt;
 const installButton = document.getElementById('installButton');
-window.getotor = () => atob(atob('UTI5a1pTQndZWElnUTJoaGNteDVJSEJ2ZFhJZ2JHVWdjSEp2YW1WMElFOXdaVzVNZFcwPQ=='));
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
@@ -48,7 +47,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
 installButton.addEventListener('click', async () => {
     if (!deferredPrompt) return;
-
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
     deferredPrompt = null;
@@ -64,26 +62,67 @@ if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.
     installButton.style.display = 'none';
 }
 
+// Fonction pour mettre à jour la LED sur le Pico
+function updateLED(value) {
+    fetch(`/led?value=${value}`)
+      .then(response => response.text())
+      .then(text => {
+          console.log("LED update:", text);
+      })
+      .catch(error => {
+          console.error("Erreur lors de la mise à jour de la LED:", error);
+      });
+}
+
+// Gestion du contrôle de l'intensité via l'interface
+const slider = document.getElementById('intensity');
+const intensityValue = document.getElementById('intensity-value');
+const toggleSwitch = document.getElementById('toggle-switch');
+const intensityControl = document.querySelector('.intensity-control');
+
+// Masquer le contrôle d'intensité par défaut
+intensityControl.style.display = 'none';
+
+// Lors du changement de l'interrupteur
+toggleSwitch.addEventListener('change', () => {
+    if (toggleSwitch.checked) {
+        slider.disabled = false;
+        intensityControl.style.display = 'block';
+        slider.value = 50;
+        intensityValue.textContent = '50%';
+        updateLED(50);
+    } else {
+        slider.disabled = true;
+        intensityControl.style.display = 'none';
+        slider.value = 0;
+        intensityValue.textContent = '0%';
+        updateLED(0);
+    }
+});
+
+// Lors du déplacement du slider
+slider.addEventListener('input', () => {
+    intensityValue.textContent = `${slider.value}%`;
+    updateLED(slider.value);
+});
+
 // Gestion NFC
+const nfc = document.getElementById('nfc');
 if (!('NDEFReader' in window)) {
-    const nfc = document.getElementById('nfc');
     nfc.style.display = 'block';
-    nfc.querySelector('#info').style.display = 'block';
-    nfc.querySelector('#info').style.color = 'tomato';
-    nfc.querySelector('#info').textContent = "La gestion NFC n'est pas supportée par votre navigateur.";
+    const info = nfc.querySelector('#info');
+    info.style.display = 'block';
+    info.style.color = 'tomato';
+    info.textContent = "La gestion NFC n'est pas supportée par votre navigateur.";
     nfc.querySelector('.writeButton').style.display = 'none';
     nfc.querySelector('.scanButton').style.display = 'none';
     console.log('NFC non supporté.');
 } else {
-    const nfc = document.getElementById('nfc');
     nfc.style.display = 'block';
-
     let isWriting = false;
 
     nfc.querySelector('.writeButton').addEventListener('click', async () => {
         const info = document.getElementById('info');
-        const slider = document.getElementById('intensity');
-
         if (!isWriting) {
             if (slider.value == 0 || slider.disabled) {
                 info.style.display = 'block';
@@ -110,11 +149,11 @@ if (!('NDEFReader' in window)) {
                     records: [
                         {
                             recordType: "url",
-                            data: `${siteUrl}/tag/${slider.value}`
+                            data: `${siteUrl}/led?value=${slider.value}`
                         }
                     ]
                 });
-                console.log('URL écrite sur le tag:', `${siteUrl}/tag/${slider.value}`);
+                console.log('URL écrite sur le tag:', `${siteUrl}/led?value=${slider.value}`);
                 info.style.display = 'block';
                 info.style.color = 'green';
                 info.textContent = 'Tag écrit avec succès!';
@@ -129,79 +168,48 @@ if (!('NDEFReader' in window)) {
             isWriting = false;
         }
     });
-}
 
-nfc.querySelector('.scanButton').addEventListener('click', async () => {
-    const siteUrl = window.location.origin;
-    const info = document.getElementById('info');
-    info.style.display = 'block';
-    document.querySelector('.writeButton').style.display = 'none';
-    document.querySelector('.scanButton').style.display = 'none';
-    info.style.color = 'gray';
-    info.textContent = 'Veuillez approcher le tag NFC...';
-    try {
-        const ndef = new NDEFReader();
-        await ndef.scan();
-        ndef.addEventListener('reading', ({ message }) => {
-            console.log('Tag NFC détecté:', message);
-            const record = message.records[0];
-            if (record.recordType === 'url') {
-                const url = new TextDecoder().decode(record.data);
-                console.log('URL détectée:', url);
-                if (url == url.includes(`${siteUrl}/tag/`)) {
-                    info.style.display = 'block';
-                    info.style.color = 'green';
-                    info.textContent = `Ce tag a été écrit avec l'intensité: ${slider.value}`;
+    nfc.querySelector('.scanButton').addEventListener('click', async () => {
+        const siteUrl = window.location.origin;
+        const info = document.getElementById('info');
+        info.style.display = 'block';
+        document.querySelector('.writeButton').style.display = 'none';
+        document.querySelector('.scanButton').style.display = 'none';
+        info.style.color = 'gray';
+        info.textContent = 'Veuillez approcher le tag NFC...';
+        try {
+            const ndef = new NDEFReader();
+            await ndef.scan();
+            ndef.addEventListener('reading', ({ message }) => {
+                console.log('Tag NFC détecté:', message);
+                const record = message.records[0];
+                if (record.recordType === 'url') {
+                    const url = new TextDecoder().decode(record.data);
+                    console.log('URL détectée:', url);
+                    if (url.includes(`${siteUrl}/led?value=`)) {
+                        let intensity = url.split(`${siteUrl}/led?value=`)[1];
+                        info.style.display = 'block';
+                        info.style.color = 'green';
+                        info.textContent = `Tag lu: intensité ${intensity}%`;
+                    } else {
+                        info.style.display = 'block';
+                        info.style.color = 'tomato';
+                        info.textContent = 'Ce tag n\'a pas été écrit par cette application.';
+                    }
                 } else {
                     info.style.display = 'block';
                     info.style.color = 'tomato';
-                    console.log('record.data:', record.data);
-                    console.log('Le tag ne contient pas une URL valide.');
-                    info.textContent = 'Ce tag n\'a pas été écrit par cette application.';
+                    info.textContent = 'Ce tag ne contient pas une URL valide.';
                 }
-            } else {
-                info.style.display = 'block';
-                info.style.color = 'tomato';
-                info.textContent = 'Ce tag ne contient pas une URL valide.';
-            }
-        });
-    } catch (error) {
-        console.error('Erreur lors de la lecture du tag NFC:', error);
-        info.style.display = 'block';
-        info.style.color = 'tomato';
-        info.textContent = 'Erreur lors de la lecture du tag NFC.';
-    }
-});
-
-// Contrôle de l'intensité
-const slider = document.getElementById('intensity');
-const intensityValue = document.getElementById('intensity-value');
-const toggleSwitch = document.getElementById('toggle-switch');
-const intensityControl = document.querySelector('.intensity-control');
-
-intensityControl.style.display = 'none';
-
-toggleSwitch.addEventListener('change', () => {
-    intensityValue.textContent = '50%';
-    if (toggleSwitch.checked) {
-        slider.disabled = false;
-        intensityControl.style.display = 'block';
-        slider.value = 50;
-    } else {
-        slider.disabled = true;
-        slider.value = 0;
-        intensityControl.style.display = 'none';
-    }
-});
-
-slider.addEventListener('input', () => {
-    intensityValue.textContent = `${slider.value}%`;
-    if (slider.value == 0) {
-        toggleSwitch.checked = false;
-        slider.disabled = true;
-        intensityControl.style.display = 'none';
-    }
-});
+            });
+        } catch (error) {
+            console.error('Erreur lors de la lecture du tag NFC:', error);
+            info.style.display = 'block';
+            info.style.color = 'tomato';
+            info.textContent = 'Erreur lors de la lecture du tag NFC.';
+        }
+    });
+}
 
 // Gestion du bouton de réinitialisation
 const resetButton = document.getElementById('resetButton');
