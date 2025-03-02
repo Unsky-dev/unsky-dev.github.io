@@ -1,3 +1,13 @@
+# Matériel
+
+- Raspberry Pi Pico W 
+- Bande LED (avec bon volt)
+- MOSFET IRLB8721 (contrôle le passage du courant)
+- Résistance de 220Ω (pour protéger la gate du MOSFET)
+- Alimentation (12V ou 24V voir sur notre fiche)
+- Fils de connexion (pour connecter le Pico, le MOSFET et la bande LED)
+
+
 # Montage 
 ## Alimentation de la bande LED
 
