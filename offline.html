@@ -4,25 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hors Ligne</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/offline.css">
 </head>
 <body>
     <h1>Impossible d'obtenir l'état de votre lampe</h1>
     <p>Veuillez vous assurer que vous êtes connecté au réseau Wi-Fi de votre lampe.</p>
     <div id="status">Vérification de la connexion<span id="dots">...</span></div>
     <script>
+        let tryCount = 0;
+
         function checkConnection() {
+            tryCount++;
             fetch('/status')
                 .then(response => response.text())
                 .then(status => {
                     if (status === 'OK') {
                         window.location.href = "index.html";
                     } else {
-                        document.getElementById('status').innerText = "Toujours hors ligne...";
+                        document.getElementById('status').childNodes[0].nodeValue = `Toujours hors ligne (tentative: ${tryCount}) `;
                     }
                 })
                 .catch(() => {
-                    document.getElementById('status').innerText = "Toujours hors ligne...";
+                    document.getElementById('status').childNodes[0].nodeValue = `Toujours hors ligne (tentative: ${tryCount}) `;
                 });
         }
 

@@ -1,0 +1,50 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+#status {
+    font-size: 18px;
+    color: var(--secondary-color);
+}
+
+#dots {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Mode clair */
+@media (prefers-color-scheme: light) {
+    :root {
+        --primary-color: #6a11cb;
+        --secondary-color: #2575fc;
+        --background-color: #f4f7f6;
+        --text-color: #333;
+    }
+}
+
+/* Mode sombre */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary-color: #753eab;
+        --secondary-color: #2e63a0;
+        --background-color: #121212;
+        --text-color: #e0e0e0;
+    }
+}
