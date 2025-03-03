@@ -24,3 +24,7 @@ Broche PWM (GP15) → Résistance 220Ω → Gate du MOSFET
 GND commun
 
 GND du Pico W → relié directement au GND de l'alimentation
+
+# Carte SD
+
+https://www.instructables.com/Raspberry-Pi-Pico-Micro-SD-Card-Interface/
