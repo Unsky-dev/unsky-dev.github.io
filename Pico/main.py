@@ -8,7 +8,7 @@ led = PWM(Pin(15))
 led.freq(1000)  # PWM Frequency
 
 # Access Point
-SSID = "Pico_Wifi"
+SSID = "OpenLuminate"
 PASSWORD = "12345678"
 ap = network.WLAN(network.AP_IF)
 ap.active(True)
